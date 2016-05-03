@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import tcss450.uw.edu.mynewapp.Authenticate.RegisterActivity;
 import tcss450.uw.edu.mynewapp.Authenticate.SignInActivity;
 import tcss450.uw.edu.mynewapp.model.BookContent;
 
@@ -38,25 +39,24 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
 //            }
 //        });
 
-        TextView book = (TextView) findViewById(R.id.book);
+        TextView book = (TextView) findViewById(R.id.books);
         book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(CategoryActivity.this, BookActivity.class);
                 startActivity(i);
-                onBackPressed();
-                finish();
             }
         });
 
-//        Button register = (Button) findViewById(R.id.register_button);
-//        register.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
-//
+        Button register = (Button) findViewById(R.id.register_button);
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(CategoryActivity.this, RegisterActivity.class);
+                startActivity(i);
+            }
+        });
+
         Button login = (Button) findViewById(R.id.login_button);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +68,6 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
 //                        .commit();
                 Intent i = new Intent(CategoryActivity.this, SignInActivity.class);
                 startActivity(i);
-                finish();
             }
         });
 
@@ -108,7 +107,6 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
 
             Intent i = new Intent(this, SignInActivity.class);
             startActivity(i);
-            finish();
             return true;
         }
 

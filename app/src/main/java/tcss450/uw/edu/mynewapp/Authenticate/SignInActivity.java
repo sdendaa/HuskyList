@@ -32,7 +32,6 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
         else {
             Intent i = new Intent(this, CategoryActivity.class);
             startActivity(i);
-            finish();
         }
     }
     public void login(String userId, String pwd) {
@@ -61,6 +60,5 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
                 .commit();
         Intent i = new Intent(this, CategoryActivity.class);
         startActivity(i);
-        finish();
     }
 }
