@@ -21,8 +21,9 @@ public class ItemDetailFragment extends Fragment {
     private TextView mItemPriceTextView;
     private TextView mItemConditionTextView;
     private TextView mItemDescriptionTextView;
-    private TextView mItemCategoryTextView;
-    private TextView mItemSalerLocationTextView;
+    private TextView mItemSellerLocationTextView;
+    private TextView mItemSellerContactTextView;
+
     public static String ADS_ITEM_SELECTED = "adsItemSelected";
 
 
@@ -35,6 +36,7 @@ public class ItemDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setTitle("Details About This Book");
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_item_detail, container, false);
         mItemIdTextView = (TextView) view.findViewById(R.id.item_id);
@@ -42,8 +44,9 @@ public class ItemDetailFragment extends Fragment {
         mItemPriceTextView = (TextView) view.findViewById(R.id.item_price);
         mItemConditionTextView = (TextView) view.findViewById(R.id.item_condition);
         mItemDescriptionTextView = (TextView) view.findViewById(R.id.item_Description);
-        mItemCategoryTextView = (TextView) view.findViewById(R.id.item_Category);
-        mItemSalerLocationTextView = (TextView) view.findViewById(R.id.item_saler_location);
+        mItemSellerLocationTextView = (TextView) view.findViewById(R.id.item_seller_location);
+        mItemSellerContactTextView = (TextView) view.findViewById(R.id.item_seller_contact);
+
 
 //        FloatingActionButton floatingActionButton = (FloatingActionButton)
 //                getActivity().findViewById(R.id.fab);
@@ -54,13 +57,13 @@ public class ItemDetailFragment extends Fragment {
 
     public void updateView(BookContent content) {
         if (content != null) {
-            mItemIdTextView.setText(content.getItemID());
-            mItemTitleTextView.setText(content.getItemTitle());
-            mItemPriceTextView.setText(new Double(content.getItemPrice()).toString());
-            mItemConditionTextView.setText(content.getmItemCondtion());
-            mItemDescriptionTextView.setText(content.getItemDescription());
-            mItemCategoryTextView.setText(content.getItemCategory());
-            mItemSalerLocationTextView.setText(content.getSalerLocation());
+            mItemIdTextView.setText("Item ID: "+content.getItemID());
+            mItemTitleTextView.setText("Item Tilte: "+content.getItemTitle());
+            mItemPriceTextView.setText(("Item Price: "+content.getItemPrice()));
+            mItemConditionTextView.setText("Item condition: "+content.getmItemCondtion());
+            mItemDescriptionTextView.setText("Item Description: "+content.getItemDescription());
+            mItemSellerLocationTextView.setText("Seller Location: "+content.getSellerLocation());
+            mItemSellerContactTextView.setText("Seller Contact: "+content.getSellerContact());
         }
     }
 

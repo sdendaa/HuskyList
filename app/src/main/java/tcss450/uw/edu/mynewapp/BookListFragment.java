@@ -1,6 +1,8 @@
 package tcss450.uw.edu.mynewapp;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +19,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import tcss450.uw.edu.mynewapp.model.BookContent;
@@ -37,8 +40,10 @@ public class BookListFragment extends Fragment {
     private OnListFragmentInteractionListener mListener;
     private List<BookContent> mBookList;
     private RecyclerView mRecyclerView;
+//    private static final String COURSE_URL
+//            = "http://cssgate.insttech.washington.edu/~vsmirnov/Android/test.php?cmd=courses";
     private static final String COURSE_URL
-            = "http://cssgate.insttech.washington.edu/~vsmirnov/Android/test.php?cmd=courses";
+        = "http://cssgate.insttech.washington.edu/~sdendaa/husky.php?cmd=books";
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -71,20 +76,34 @@ public class BookListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_book_list, container, false);
 
+        getActivity().setTitle("Lists of Books");
+
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            mRecyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyBookRecyclerViewAdapter(mBookList, mListener));
+            // mRecyclerView.setAdapter(new MyBookRecyclerViewAdapter(mBookList, mListener));
         }
 
-        DownloadCoursesTask task = new DownloadCoursesTask();
-        task.execute(new String[]{COURSE_URL});
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            DownloadCoursesTask task = new DownloadCoursesTask();
+            task.execute(new String[]{COURSE_URL});
+
+        }
+        else {
+            Toast.makeText(view.getContext(),
+                    "No network connection available. Cannot display courses",
+                    Toast.LENGTH_SHORT).show();
+        }
 
         return view;
     }
@@ -124,6 +143,31 @@ public class BookListFragment extends Fragment {
 
 
     private class DownloadCoursesTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPostExecute(String result) {
+            // Something wrong with the network or the URL.
+            if (result.startsWith("Unable to")) {
+                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
+                        .show();
+                return;
+            }
+
+            mBookList = new ArrayList<BookContent>();
+            result = BookContent.parseCourseJSON(result, mBookList);
+            // Something wrong with the JSON returned.
+            if (result != null) {
+                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
+                        .show();
+                return;
+            }
+
+            // Everything is good, show the list of courses.
+            if (!mBookList.isEmpty()) {
+                mRecyclerView.setAdapter(new MyBookRecyclerViewAdapter(mBookList, mListener));
+            }
+
+        }
 
         @Override
         protected String doInBackground(String... urls) {

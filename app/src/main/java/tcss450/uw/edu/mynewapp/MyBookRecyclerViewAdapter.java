@@ -37,7 +37,7 @@ public class MyBookRecyclerViewAdapter extends RecyclerView.Adapter<MyBookRecycl
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).getItemID());
-        holder.mContentView.setText(mValues.get(position).getItemDescription());
+        holder.mContentView.setText(mValues.get(position).getItemTitle());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

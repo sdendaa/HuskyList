@@ -34,11 +34,20 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/item_Category" />
+        android:id="@+id/item_seller_location" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/item_saler_location" />
+        android:id="@+id/item_seller_contact" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:autoLink="email"
+        android:id="@+id/contact_seller_button"
+        android:text="@string/contact_seller_text"
+        android:onClick="addAds" />
 
 </LinearLayout>

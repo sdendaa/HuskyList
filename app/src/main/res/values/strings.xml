@@ -9,4 +9,7 @@
     <string name="title_activity_book">BookActivity</string>
     <string name="add_item_text"> Add your Ads</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <string name="contact_seller_text"> Email Seller</string>
+    <string name="title_activity_contact_seller">ContactSellerActivity</string>
+    <string name="add_book_text"> Add new Book</string>
 </resources>

@@ -34,6 +34,15 @@ public class BookActivity extends AppCompatActivity implements BookListFragment.
     }
 
     public void onListFragmentInteraction(BookContent item) {
+        ItemDetailFragment itemDetailFragment = new ItemDetailFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ItemDetailFragment.ADS_ITEM_SELECTED, item);
+        itemDetailFragment.setArguments(args);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, itemDetailFragment)
+                .addToBackStack(null)
+                .commit();
 
     }
 
