@@ -6,23 +6,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import tcss450.uw.edu.mynewapp.Category.CategoryContent;
-import tcss450.uw.edu.mynewapp.CategoryListFragment.OnListFragmentInteractionListener;
-import tcss450.uw.edu.mynewapp.Category.CategoryContent.CategoryItem;
+import tcss450.uw.edu.mynewapp.BookListFragment.OnListFragmentInteractionListener;
+import tcss450.uw.edu.mynewapp.model.BookContent;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link CategoryContent} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link BookContent} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyclerViewAdapter.ViewHolder> {
+public class MyBookRecyclerViewAdapter extends RecyclerView.Adapter<MyBookRecyclerViewAdapter.ViewHolder> {
 
-    private final List<CategoryContent.CategoryItem> mValues;
+    private final List<BookContent> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyCategoryRecyclerViewAdapter(List<CategoryContent.CategoryItem> items, OnListFragmentInteractionListener listener) {
+    public MyBookRecyclerViewAdapter(List<BookContent> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -30,16 +29,15 @@ public class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCatego
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_category, parent, false);
+                .inflate(R.layout.fragment_book, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-//        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
-
+        holder.mIdView.setText(mValues.get(position).getItemID());
+        holder.mContentView.setText(mValues.get(position).getItemDescription());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +45,7 @@ public class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCatego
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(position);
+                    mListener.onListFragmentInteraction(holder.mItem);
                 }
             }
         });
@@ -60,14 +58,14 @@ public class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCatego
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-//        public final TextView mIdView;
+        public final TextView mIdView;
         public final TextView mContentView;
-        public CategoryItem mItem;
+        public BookContent mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-//            mIdView = (TextView) view.findViewById(R.id.id);
+            mIdView = (TextView) view.findViewById(R.id.id);
             mContentView = (TextView) view.findViewById(R.id.content);
         }
 
