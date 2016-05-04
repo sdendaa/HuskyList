@@ -1,4 +1,4 @@
-package tcss450.uw.edu.mynewapp.Authenticate;
+package tcss450.uw.edu.mynewapp;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -19,35 +19,38 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import tcss450.uw.edu.mynewapp.CategoryActivity;
-import tcss450.uw.edu.mynewapp.R;
-
-public class RegisterActivity extends AppCompatActivity implements RegisterFragment.RegisterListener {
+public class AddBookActivity extends AppCompatActivity implements AdsAddFragment.BookAddListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_add_book);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        AdsAddFragment addFragment = new AdsAddFragment();
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, new RegisterFragment())
+                .replace(R.id.fragment_add_container,addFragment)
+                .addToBackStack(null)
                 .commit();
+
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
+    private class AddBookTask extends AsyncTask<String, Void, String> {
 
-    public void addUser(String url) {
-        AddCourseTask task = new AddCourseTask();
-        task.execute(new String[]{url.toString()});
-        Intent i = new Intent(this, CategoryActivity.class);
-        startActivity(i);
-
-//        // Takes you back to the previous fragment by popping the current fragment out.
-//        getSupportFragmentManager().popBackStackImmediate();
-    }
-
-    private class AddCourseTask extends AsyncTask<String, Void, String> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
         }
 
         @Override
@@ -68,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFragm
                     }
 
                 } catch (Exception e) {
-                    response = "Unable to add user, Reason: "
+                    response = "Unable to add course, Reason: "
                             + e.getMessage();
                 } finally {
                     if (urlConnection != null)
@@ -89,17 +92,16 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFragm
         @Override
         protected void onPostExecute(String result) {
             // Something wrong with the network or the URL.
-
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 String status = (String) jsonObject.get("result");
                 if (status.equals("success")) {
-                    Toast.makeText(getApplicationContext(), "Registered successfully!"
+                    Toast.makeText(getApplicationContext(), "Course successfully added!"
                             , Toast.LENGTH_LONG)
                             .show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Failed to register: "
-                            + jsonObject.get("error")
+                    Toast.makeText(getApplicationContext(), "Failed to add: "
+                                    + jsonObject.get("error")
                             , Toast.LENGTH_LONG)
                             .show();
                 }
@@ -109,5 +111,15 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFragm
             }
         }
     }
+    public void addBook(String url){
+        AddBookTask task = new AddBookTask();
+        task.execute(new String[]{url.toString()});
+        // Takes you back to the previous fragment by popping the current fragment out.
+        getSupportFragmentManager().popBackStackImmediate();
+//        Intent i = new Intent(this, BookActivity.class);
+//        startActivity(i);
+
+    }
+
 
 }
