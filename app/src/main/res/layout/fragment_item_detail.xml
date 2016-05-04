@@ -47,7 +47,6 @@
         android:layout_gravity="left"
         android:autoLink="email"
         android:id="@+id/contact_seller_button"
-        android:text="@string/contact_seller_text"
-        android:onClick="addAds" />
+        android:text="@string/contact_seller_text" />
 
 </LinearLayout>

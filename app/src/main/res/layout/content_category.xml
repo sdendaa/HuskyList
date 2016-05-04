@@ -67,7 +67,7 @@
         android:text="Register"
         android:id="@+id/register_button"
         android:layout_marginTop="750dp"
-        android:layout_marginLeft="195dp" />
+        android:layout_marginLeft="150dp" />
 
 
     <Button
@@ -76,6 +76,14 @@
         android:text="Login"
         android:id="@+id/login_button"
         android:layout_marginTop="750dp"
-        android:layout_marginLeft="285dp" />
+        android:layout_marginLeft="239dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create New Ads"
+        android:id="@+id/create_newAds_button"
+        android:layout_marginTop="750dp"
+        android:layout_marginLeft="329dp" />
 
 </RelativeLayout>

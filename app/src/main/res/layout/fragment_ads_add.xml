@@ -1,7 +1,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_add_course"
+    android:id="@+id/fragment_container"
     android:name="tcss450.uw.mynewapp.AdsAddFragment"
     android:layout_width="match_parent"
 
@@ -12,6 +12,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:hint="Enter the item ID here.."
         android:id="@+id/add_item_id" />
 
@@ -39,17 +40,18 @@
         android:hint="Enter the item description here.."
         android:id="@+id/add_item_Description" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter the item category here.."
-        android:id="@+id/add_item_Category" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter the item's saler location here.."
-        android:id="@+id/add_item_saler_location" />
+        android:id="@+id/add_item_seller_location" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter the item's seller contact here.."
+        android:id="@+id/add_item_seller_contact" />
 
     <Button
         android:layout_width="wrap_content"

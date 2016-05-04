@@ -1,14 +1,18 @@
 package tcss450.uw.edu.mynewapp;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.support.design.widget.FloatingActionButton;
 
+import tcss450.uw.edu.mynewapp.Authenticate.RegisterActivity;
 import tcss450.uw.edu.mynewapp.model.BookContent;
 
 
@@ -23,6 +27,8 @@ public class ItemDetailFragment extends Fragment {
     private TextView mItemDescriptionTextView;
     private TextView mItemSellerLocationTextView;
     private TextView mItemSellerContactTextView;
+    private String mEmail;
+    private String mTitle;
 
     public static String ADS_ITEM_SELECTED = "adsItemSelected";
 
@@ -30,13 +36,14 @@ public class ItemDetailFragment extends Fragment {
 
     public ItemDetailFragment() {
         // Required empty public constructor
+
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().setTitle("Details About This Book");
+        getActivity().setTitle(mTitle);
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_item_detail, container, false);
         mItemIdTextView = (TextView) view.findViewById(R.id.item_id);
@@ -47,6 +54,16 @@ public class ItemDetailFragment extends Fragment {
         mItemSellerLocationTextView = (TextView) view.findViewById(R.id.item_seller_location);
         mItemSellerContactTextView = (TextView) view.findViewById(R.id.item_seller_contact);
 
+        Button contact_seller = (Button) view.findViewById(R.id.contact_seller_button);
+        contact_seller.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + mEmail));
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "");
+                startActivity(Intent.createChooser(emailIntent, "Chooser Title"));
+            }
+        });
 
 //        FloatingActionButton floatingActionButton = (FloatingActionButton)
 //                getActivity().findViewById(R.id.fab);
@@ -64,6 +81,9 @@ public class ItemDetailFragment extends Fragment {
             mItemDescriptionTextView.setText("Item Description: "+content.getItemDescription());
             mItemSellerLocationTextView.setText("Seller Location: "+content.getSellerLocation());
             mItemSellerContactTextView.setText("Seller Contact: "+content.getSellerContact());
+            mEmail = content.getSellerContact();
+            mTitle = content.getItemTitle();
+            getActivity().setTitle(mTitle);
         }
     }
 

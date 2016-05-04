@@ -164,5 +164,4 @@ public class BookContent implements Serializable {
         }
         return reason;
     }
-
 }

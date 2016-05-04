@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import tcss450.uw.edu.mynewapp.Authenticate.RegisterActivity;
 import tcss450.uw.edu.mynewapp.Authenticate.SignInActivity;
@@ -38,6 +39,16 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
 //                        .commit();
 //            }
 //        });
+
+        Button addButton = (Button) findViewById(R.id.create_newAds_button);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(CategoryActivity.this, AddBookActivity.class);
+                startActivity(i);
+
+            }
+        });
 
         TextView book = (TextView) findViewById(R.id.books);
         book.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +79,7 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
 //                        .commit();
                 Intent i = new Intent(CategoryActivity.this, SignInActivity.class);
                 startActivity(i);
+
             }
         });
 
@@ -115,6 +127,15 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
 
     @Override
     public void onListFragmentInteraction(BookContent item) {
+//        ItemDetailFragment itemDetailFragment = new ItemDetailFragment();
+//        Bundle args = new Bundle();
+//        args.putSerializable(ItemDetailFragment.ADS_ITEM_SELECTED, item);
+//        itemDetailFragment.setArguments(args);
+//
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.fragment_container, itemDetailFragment)
+//                .addToBackStack(null)
+//                .commit();
 
     }
 
