@@ -1,6 +1,8 @@
+/*
+* HuskyList App
+* Authors: Vladimir Smirnov and Shelema Bekele
+*/
 package tcss450.uw.edu.mynewapp;
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,19 +18,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.net.URLEncoder;
-
-
 /**
- * A simple {@link Fragment} subclass.
+ * The AdsAddFragment is responsible for creating new ads.
+ *
+ * @author Shelema Bekele
+ * @author Vladimir Smirnov
+ * @version 1.0
  */
 public class AdsAddFragment extends Fragment {
+    /** This variable holds the book add listener. */
     private BookAddListener mListener;
+    /** This variable holds the EditText for the item ID. */
     private EditText mItemIdEditText;
+    /** This variable holds the TextView for the item title. */
     private TextView mItemTitleEditText;
+    /** This variable holds the TextView for the item price. */
     private TextView mItemPriceEditText;
+    /** This variable holds the TextView for the item condition. */
     private TextView mItemConditionEditText;
+    /** This variable holds the TextView for the item description. */
     private TextView mItemDescriptionEditText;
+    /** This variable holds the TextView for the seller location. */
     private TextView mItemSellerLocationEditText;
+    /** This variable holds the TextView for the seller contact information. */
     private TextView mItemSellerContactEditText;
 
     private final static String Ads_ADD_URL

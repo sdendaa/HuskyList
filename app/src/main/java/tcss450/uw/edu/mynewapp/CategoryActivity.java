@@ -1,5 +1,8 @@
+/*
+* HuskyList App
+* Authors: Vladimir Smirnov and Shelema Bekele
+*/
 package tcss450.uw.edu.mynewapp;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,32 +19,35 @@ import android.widget.Toast;
 import tcss450.uw.edu.mynewapp.Authenticate.RegisterActivity;
 import tcss450.uw.edu.mynewapp.Authenticate.SignInActivity;
 import tcss450.uw.edu.mynewapp.model.BookContent;
-
+/**
+ * The CategoryActivity basically the main activity. It holds the
+ * list of categories, the buttons and the logo.
+ *
+ * @author Shelema Bekele
+ * @author Vladimir Smirnov
+ * @version 1.0
+ */
 public class CategoryActivity extends AppCompatActivity implements BookListFragment.OnListFragmentInteractionListener  {
 
+    /**
+     * This method is called when the activity is created.
+     *
+     * @param savedInstanceState is a bundle holding the saved state.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//
-//        RegisterUserButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                //This code will be to register users
-//
-//                CourseAddFragment courseAddFragment = new CourseAddFragment();
-//                getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.fragment_container, courseAddFragment)
-//                        .addToBackStack(null)
-//                        .commit();
-//            }
-//        });
 
         Button addButton = (Button) findViewById(R.id.create_newAds_button);
         addButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * This method is called when the button is clicked.
+             *
+             * @param view is the given view.
+             */
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(CategoryActivity.this, AddBookActivity.class);
@@ -52,6 +58,11 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
 
         TextView book = (TextView) findViewById(R.id.books);
         book.setOnClickListener(new View.OnClickListener() {
+            /**
+             * This method is called when the button is clicked.
+             *
+             * @param view is the given view.
+             */
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(CategoryActivity.this, BookActivity.class);
@@ -61,6 +72,11 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
 
         Button register = (Button) findViewById(R.id.register_button);
         register.setOnClickListener(new View.OnClickListener() {
+            /**
+             * This method is called when the button is clicked.
+             *
+             * @param view is the given view.
+             */
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(CategoryActivity.this, RegisterActivity.class);
@@ -70,27 +86,27 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
 
         Button login = (Button) findViewById(R.id.login_button);
         login.setOnClickListener(new View.OnClickListener() {
+            /**
+             * This method is called when the button is clicked.
+             *
+             * @param view is the given view.
+             */
             @Override
             public void onClick(View view) {
-//                LoginFragment loginFragment = new LoginFragment();
-//                getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.fragment_container, loginFragment)
-//                        .addToBackStack(null)
-//                        .commit();
                 Intent i = new Intent(CategoryActivity.this, SignInActivity.class);
                 startActivity(i);
 
             }
         });
-
-
-//        if (findViewById(R.id.fragment_container)!= null) {
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.fragment_container, new CategoryListFragment())
-//                    .commit();
-//        }
     }
 
+    /**
+     * This method is called when the activity is created. It
+     * is used to create the options menu.
+     *
+     * @param menu is the given menu.
+     * @return is a Boolean representing the outcome.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -98,6 +114,12 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
         return true;
     }
 
+    /**
+     * This method is used to handle the bar item clicks.
+     *
+     * @param item is the given menu item.
+     * @return is a Boolean representing the outcome.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -125,17 +147,13 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * This method is to interact with the BookListFragment.
+     *
+     * @param item is the given book content.
+     */
     @Override
     public void onListFragmentInteraction(BookContent item) {
-//        ItemDetailFragment itemDetailFragment = new ItemDetailFragment();
-//        Bundle args = new Bundle();
-//        args.putSerializable(ItemDetailFragment.ADS_ITEM_SELECTED, item);
-//        itemDetailFragment.setArguments(args);
-//
-//        getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.fragment_container, itemDetailFragment)
-//                .addToBackStack(null)
-//                .commit();
 
     }
 

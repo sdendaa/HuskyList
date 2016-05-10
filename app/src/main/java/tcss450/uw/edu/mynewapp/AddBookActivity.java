@@ -1,5 +1,8 @@
+/*
+* HuskyList App
+* Authors: Vladimir Smirnov and Shelema Bekele
+*/
 package tcss450.uw.edu.mynewapp;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,9 +21,21 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
+/**
+ * The AddBookActivity is responsible for holding the AdsAddFragment which
+ * is used to create new ads.
+ *
+ * @author Shelema Bekele
+ * @author Vladimir Smirnov
+ * @version 1.0
+ */
 public class AddBookActivity extends AppCompatActivity implements AdsAddFragment.BookAddListener{
 
+    /**
+     * This method is called when the activity is created.
+     *
+     * @param savedInstanceState is a bundle holding the saved state.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +48,6 @@ public class AddBookActivity extends AppCompatActivity implements AdsAddFragment
                 .replace(R.id.fragment_add_container,addFragment)
                 .addToBackStack(null)
                 .commit();
-
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,15 +57,30 @@ public class AddBookActivity extends AppCompatActivity implements AdsAddFragment
             }
         });
     }
+    /**
+     * The AddBookTask is used to add books to the database.
+     *
+     * @author Shelema Bekele
+     * @author Vladimir Smirnov
+     * @version 1.0
+     */
     private class AddBookTask extends AsyncTask<String, Void, String> {
 
-
+        /**
+         * This method starts before the task is exectued.
+         */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
         }
 
+        /**
+         * This method runs in the background.
+         *
+         * @param urls is the given URL.
+         * @return is a String representing the response.
+         */
         @Override
         protected String doInBackground(String... urls) {
             String response = "";
@@ -81,13 +109,12 @@ public class AddBookActivity extends AppCompatActivity implements AdsAddFragment
             return response;
         }
 
-
         /**
-         * It checks to see if there was a problem with the URL(Network) which is when an
+         * This method checks to see if there was a problem with the URL(Network) which is when an
          * exception is caught. It tries to call the parse Method and checks to see if it was successful.
          * If not, it displays the exception.
          *
-         * @param result
+         * @param result is the JSON String.
          */
         @Override
         protected void onPostExecute(String result) {
@@ -111,15 +138,16 @@ public class AddBookActivity extends AppCompatActivity implements AdsAddFragment
             }
         }
     }
+
+    /**
+     * This method is used to add books.
+     *
+     * @param url is the given URL.
+     */
     public void addBook(String url){
         AddBookTask task = new AddBookTask();
         task.execute(new String[]{url.toString()});
         // Takes you back to the previous fragment by popping the current fragment out.
         getSupportFragmentManager().popBackStackImmediate();
-//        Intent i = new Intent(this, BookActivity.class);
-//        startActivity(i);
-
     }
-
-
 }
