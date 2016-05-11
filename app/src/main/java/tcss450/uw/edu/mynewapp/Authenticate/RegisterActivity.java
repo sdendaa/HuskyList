@@ -1,5 +1,8 @@
+/*
+* HuskyList App
+* Authors: Vladimir Smirnov and Shelema Bekele
+*/
 package tcss450.uw.edu.mynewapp.Authenticate;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,9 +24,21 @@ import java.net.URL;
 
 import tcss450.uw.edu.mynewapp.CategoryActivity;
 import tcss450.uw.edu.mynewapp.R;
-
+/**
+ * The RegisterActivity class holds the RegisterFragment which is responsible
+ * for implementing the register function.
+ *
+ * @author Shelema Bekele
+ * @author Vladimir Smirnov
+ * @version 1.0
+ */
 public class RegisterActivity extends AppCompatActivity implements RegisterFragment.RegisterListener {
 
+    /**
+     * This method is called when the class is created.
+     *
+     * @param savedInstanceState is a bundle containing the saved state.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,23 +48,41 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFragm
                 .commit();
     }
 
+    /**
+     * This method is used to add users.
+     *
+     * @param url is the given URL.
+     */
     public void addUser(String url) {
-        AddCourseTask task = new AddCourseTask();
+        AddUserTask task = new AddUserTask();
         task.execute(new String[]{url.toString()});
         Intent i = new Intent(this, CategoryActivity.class);
         startActivity(i);
-
-//        // Takes you back to the previous fragment by popping the current fragment out.
-//        getSupportFragmentManager().popBackStackImmediate();
     }
 
-    private class AddCourseTask extends AsyncTask<String, Void, String> {
+    /**
+     * The AddUserTask is used to add users to the database.
+     *
+     * @author Shelema Bekele
+     * @author Vladimir Smirnov
+     * @version 1.0
+     */
+    private class AddUserTask extends AsyncTask<String, Void, String> {
 
+        /**
+         * This method is executed before the class is created.
+         */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
+        /**
+         * This method runs in the background.
+         *
+         * @param urls is the given URL.
+         * @return is a String representing the response.
+         */
         @Override
         protected String doInBackground(String... urls) {
             String response = "";
@@ -80,16 +113,14 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFragm
 
 
         /**
-         * It checks to see if there was a problem with the URL(Network) which is when an
+         * This method checks to see if there was a problem with the URL(Network) which is when an
          * exception is caught. It tries to call the parse Method and checks to see if it was successful.
          * If not, it displays the exception.
          *
-         * @param result
+         * @param result is the JSON string result.
          */
         @Override
         protected void onPostExecute(String result) {
-            // Something wrong with the network or the URL.
-
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 String status = (String) jsonObject.get("result");
@@ -109,5 +140,4 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFragm
             }
         }
     }
-
 }

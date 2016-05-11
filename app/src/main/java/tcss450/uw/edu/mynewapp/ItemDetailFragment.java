@@ -1,6 +1,8 @@
+/*
+* HuskyList App
+* Authors: Vladimir Smirnov and Shelema Bekele
+*/
 package tcss450.uw.edu.mynewapp;
-
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,32 +16,52 @@ import android.support.design.widget.FloatingActionButton;
 
 import tcss450.uw.edu.mynewapp.Authenticate.RegisterActivity;
 import tcss450.uw.edu.mynewapp.model.BookContent;
-
-
 /**
- * A simple {@link Fragment} subclass.
+ * The ItemDetailFragment is a fragment that represents
+ * an item add.
+ *
+ * @author Shelema Bekele
+ * @author Vladimir Smirnov
+ * @version 1.0
  */
 public class ItemDetailFragment extends Fragment {
+    /** This variable is a TextView that holds the item ID. */
     private TextView mItemIdTextView;
+    /** This variable is a TextView that holds the item title. */
     private TextView mItemTitleTextView;
+    /** This variable is a TextView that holds the item price. */
     private TextView mItemPriceTextView;
+    /** This variable is a TextView that holds the item condition. */
     private TextView mItemConditionTextView;
+    /** This variable is a TextView that holds the item description. */
     private TextView mItemDescriptionTextView;
+    /** This variable is a TextView that holds the seller location. */
     private TextView mItemSellerLocationTextView;
+    /** This variable is a TextView that holds the seller contact information. */
     private TextView mItemSellerContactTextView;
+    /** This variable is a String that holds the given email. */
     private String mEmail;
+    /** This variable is a String that holds the given password. */
     private String mTitle;
-
+    /** This constant is a String that represents the item selected. */
     public static String ADS_ITEM_SELECTED = "adsItemSelected";
 
-
-
+    /**
+     * This is the ItemDetailFragment constructor.
+     */
     public ItemDetailFragment() {
         // Required empty public constructor
-
     }
 
-
+    /**
+     * This method is called when the fragment is created and is used
+     * to create the view.
+     *
+     * @param inflater is the given layout inflater.
+     * @param container is the given view group container.
+     * @param savedInstanceState is a bundle that holds the saved state.
+     * @return is the inflated view.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,25 +78,30 @@ public class ItemDetailFragment extends Fragment {
 
         Button contact_seller = (Button) view.findViewById(R.id.contact_seller_button);
         contact_seller.setOnClickListener(new View.OnClickListener() {
+            /**
+             * This method is called when the button is clicked.
+             *
+             * @param view is the given view.
+             */
             @Override
             public void onClick(View view) {
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + mEmail));
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "");
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, mTitle);
                 emailIntent.putExtra(Intent.EXTRA_TEXT, "");
                 startActivity(Intent.createChooser(emailIntent, "Chooser Title"));
             }
         });
-
-//        FloatingActionButton floatingActionButton = (FloatingActionButton)
-//                getActivity().findViewById(R.id.fab);
-//        floatingActionButton.show();
-
         return view;
     }
 
+    /**
+     * This method is used to update the view.
+     *
+     * @param content is the given BookContent.
+     */
     public void updateView(BookContent content) {
         if (content != null) {
-            mItemIdTextView.setText("Item ID: "+content.getItemID());
+//            mItemIdTextView.setText("Item ID: "+content.getItemID());
             mItemTitleTextView.setText("Item Tilte: "+content.getItemTitle());
             mItemPriceTextView.setText(("Item Price: "+content.getItemPrice()));
             mItemConditionTextView.setText("Item condition: "+content.getmItemCondtion());
@@ -87,6 +114,9 @@ public class ItemDetailFragment extends Fragment {
         }
     }
 
+    /**
+     * This method is used when the fragment starts.
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -101,6 +131,4 @@ public class ItemDetailFragment extends Fragment {
             updateView((BookContent) args.getSerializable(ADS_ITEM_SELECTED));
         }
     }
-
-
 }

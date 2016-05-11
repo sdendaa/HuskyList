@@ -1,5 +1,8 @@
+/*
+* HuskyList App
+* Authors: Vladimir Smirnov and Shelema Bekele
+*/
 package tcss450.uw.edu.mynewapp;
-
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -23,36 +26,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tcss450.uw.edu.mynewapp.model.BookContent;
-
-
 /**
- * A fragment representing a list of Items.
- * <p>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
+ * The BookListFragment is a fragment that is used to display
+ * the list of books for sale.
+ *
+ * @author Shelema Bekele
+ * @author Vladimir Smirnov
+ * @version 1.0
  */
 public class BookListFragment extends Fragment {
-
-    // TODO: Customize parameter argument names
+    /** This constant represents the argument column count. */
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
+    /** This variable represents the column count. */
     private int mColumnCount = 1;
+    /** This variable holds the fragment interaction listener */
     private OnListFragmentInteractionListener mListener;
+    /** This variable holds the list of books for sale. */
     private List<BookContent> mBookList;
+    /** This variable holds the recycler view. */
     private RecyclerView mRecyclerView;
-//    private static final String COURSE_URL
-//            = "http://cssgate.insttech.washington.edu/~vsmirnov/Android/test.php?cmd=courses";
-    private static final String COURSE_URL
+    /** This constant represents the book URL. */
+    private static final String BOOK_URL
         = "http://cssgate.insttech.washington.edu/~sdendaa/husky.php?cmd=books";
 
     /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
+     * This is the BookListFragment constructor.
      */
     public BookListFragment() {
     }
 
-    // TODO: Customize parameter initialization
+    /**
+     * This method is used to create a new instance of the
+     * BookListFragment.
+     *
+     * @param columnCount is the given column count.
+     * @return is the created fragment.
+     */
     @SuppressWarnings("unused")
     public static BookListFragment newInstance(int columnCount) {
         BookListFragment fragment = new BookListFragment();
@@ -62,6 +71,11 @@ public class BookListFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * This method is called when the fragment is created.
+     *
+     * @param savedInstanceState is a bundle holding the saved state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,13 +85,21 @@ public class BookListFragment extends Fragment {
         }
     }
 
+    /**
+     * This method is called when the fragment is created to
+     * create the view.
+     *
+     * @param inflater is the given layout inflator.
+     * @param container is the given view group container.
+     * @param savedInstanceState is a bundle holding the saved state.
+     * @return is the inflated view.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_book_list, container, false);
 
         getActivity().setTitle("Lists of Books");
-
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -95,8 +117,8 @@ public class BookListFragment extends Fragment {
                 getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            DownloadCoursesTask task = new DownloadCoursesTask();
-            task.execute(new String[]{COURSE_URL});
+            DownloadBookTask task = new DownloadBookTask();
+            task.execute(new String[]{BOOK_URL});
 
         }
         else {
@@ -108,7 +130,11 @@ public class BookListFragment extends Fragment {
         return view;
     }
 
-
+    /**
+     * This method is used to attach the fragment.
+     *
+     * @param context is the given context.
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -120,6 +146,9 @@ public class BookListFragment extends Fragment {
         }
     }
 
+    /**
+     * This method is used to detach the fragment.
+     */
     @Override
     public void onDetach() {
         super.onDetach();
@@ -137,13 +166,29 @@ public class BookListFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
+        /**
+         * This method must be overridden by the activites that
+         * contain this fragment.
+         *
+         * @param item is the given book content.
+         */
         void onListFragmentInteraction(BookContent item);
     }
 
+    /**
+     * The DownloadBookTask is used to download books from the database.
+     *
+     * @author Shelema Bekele
+     * @author Vladimir Smirnov
+     * @version 1.0
+     */
+    private class DownloadBookTask extends AsyncTask<String, Void, String> {
 
-    private class DownloadCoursesTask extends AsyncTask<String, Void, String> {
-
+        /**
+         * This method is called after execution.
+         *
+         * @param result is the given result.
+         */
         @Override
         protected void onPostExecute(String result) {
             // Something wrong with the network or the URL.
@@ -154,7 +199,7 @@ public class BookListFragment extends Fragment {
             }
 
             mBookList = new ArrayList<BookContent>();
-            result = BookContent.parseCourseJSON(result, mBookList);
+            result = BookContent.parseBookJSON(result, mBookList);
             // Something wrong with the JSON returned.
             if (result != null) {
                 Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
@@ -169,6 +214,12 @@ public class BookListFragment extends Fragment {
 
         }
 
+        /**
+         * This method runs in the background.
+         *
+         * @param urls is the given URL.
+         * @return is a String representing the response.
+         */
         @Override
         protected String doInBackground(String... urls) {
             String response = "";

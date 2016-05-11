@@ -1,5 +1,8 @@
+/*
+* HuskyList App
+* Authors: Vladimir Smirnov and Shelema Bekele
+*/
 package tcss450.uw.edu.mynewapp.Authenticate;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,14 +33,28 @@ import tcss450.uw.edu.mynewapp.CategoryActivity;
 import tcss450.uw.edu.mynewapp.MyBookRecyclerViewAdapter;
 import tcss450.uw.edu.mynewapp.R;
 import tcss450.uw.edu.mynewapp.model.BookContent;
-
+/**
+ * The SignInActivity holds the LoginFragment which is responsible
+ * for implementing the login functionality.
+ *
+ * @author Shelema Bekele
+ * @author Vladimir Smirnov
+ * @version 1.0
+ */
 public class SignInActivity extends AppCompatActivity implements LoginFragment.LoginInteractionListener {
-
+    /** This variable holds the shared preferences. */
     private SharedPreferences mSharedPreferences;
+    /** This variable holds a map that has all of the email/password pairs. */
     private Map <String,String> mMap;
-    private static final String COURSE_URL
+    /** This variable holds the user URL */
+    private static final String USER_URL
             = "http://cssgate.insttech.washington.edu/~vsmirnov/Android/test.php?cmd=users";
 
+    /**
+     * This method is called when the activity is created.
+     *
+     * @param savedInstanceState is the given bundle holding the saved state.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +67,9 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
                     .commit();
         }
         else {
+            Toast.makeText(getApplicationContext(), "Already logged in!"
+                    , Toast.LENGTH_LONG)
+                    .show();
             Intent i = new Intent(this, CategoryActivity.class);
             startActivity(i);
         }
@@ -57,10 +77,17 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            DownloadCoursesTask task = new DownloadCoursesTask();
-            task.execute(new String[]{COURSE_URL});
+            DownloadUserTask task = new DownloadUserTask();
+            task.execute(new String[]{USER_URL});
         }
     }
+
+    /**
+     * This method passes the login information from the LoginFragment.
+     *
+     * @param userId is the given userId.
+     * @param pwd is the given password.
+     */
     public void login(String userId, String pwd) {
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -72,7 +99,7 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
                 Map.Entry<String,String> pairs = (Map.Entry<String,String>)iterator.next();
                 String value =  pairs.getValue();
                 String key = pairs.getKey();
-               // System.out.println(value + " " + key);
+               // Passwords match
                 if (userId.equals(key) && pwd.equals(value)) {
                     System.out.println("Logged in");
                     mSharedPreferences
@@ -85,26 +112,30 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
                     Intent i = new Intent(this, CategoryActivity.class);
                     startActivity(i);
                 }
+                // On last pair and passwords do not match.
+                if ((!iterator.hasNext()) && ((!userId.equals(key) && !pwd.equals(value)))) {
+                    Toast.makeText(getApplicationContext(), "Invalid email or password!"
+                            , Toast.LENGTH_LONG)
+                            .show();
+                }
             }
 
-            //new LoginTask().execute(url);
-//            try {
-//                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-//                        openFileOutput("tcss450.uw.edu.mynewapp.LOGIN_FILE"
-//                                , Context.MODE_PRIVATE));
-//                outputStreamWriter.write("email = " + userId + ";");
-//                outputStreamWriter.write("password = " + pwd);
-//                outputStreamWriter.close();
-//                Toast.makeText(this, "Stored in File Successfully!", Toast.LENGTH_LONG)
-//                        .show();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
         }
     }
+    /**
+     * The DownloadUserTask downloads all of the users.
+     *
+     * @author Shelema Bekele
+     * @author Vladimir Smirnov
+     * @version 1.0
+     */
+    private class DownloadUserTask extends AsyncTask<String, Void, String> {
 
-    private class DownloadCoursesTask extends AsyncTask<String, Void, String> {
-
+        /**
+         * This method is called when the task is executed.
+         *
+         * @param result is the given JSON result.
+         */
         @Override
         protected void onPostExecute(String result) {
 
@@ -115,6 +146,12 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
 
         }
 
+        /**
+         * This method runs in the background.
+         *
+         * @param urls is the given URL.
+         * @return is a String representing the response.
+         */
         @Override
         protected String doInBackground(String... urls) {
             String response = "";
@@ -144,19 +181,21 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
             return response;
         }
 
-        private String parseJSON (String courseJSON, Map <String,String> myMap) {
+        /**
+         * This method is responsible for parsing the JSON String.
+         *
+         * @param userJSON is the user JSON string.
+         * @param myMap is a map holding the email/password pairs.
+         * @return is a String that is 1 if successful.
+         */
+        private String parseJSON (String userJSON, Map <String,String> myMap) {
             String reason = "1";
-            if (courseJSON != null) {
+            if (userJSON != null) {
                 try {
-                    JSONArray arr = new JSONArray(courseJSON);
+                    JSONArray arr = new JSONArray(userJSON);
 
                     for (int i = 0; i < arr.length(); i++) {
                         JSONObject obj = arr.getJSONObject(i);
-
-//                        BookContent book = new BookContent(obj.getString(BookContent.Item_id), obj.getString(BookContent.Item_title),
-//                                obj.getString(BookContent.Item_price), obj.getString(BookContent.Item_Condition), obj.getString(BookContent.Item_description),
-//                                obj.getString(BookContent.seller_location), obj.getString(BookContent.seller_contact));
-
                         myMap.put(obj.getString("email"), obj.getString("pwd"));
                     }
 
