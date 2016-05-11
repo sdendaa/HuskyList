@@ -8,10 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.lang.String;
 /**
  * The BookContent is the model class that represents a "Book".
@@ -20,7 +17,7 @@ import java.lang.String;
  * @author Vladimir Smirnov
  * @version 1.0
  */
-public class BookContent implements Serializable {
+public class ItemContent implements Serializable {
     /** This variable holds the item ID. */
     private String mItem_id;
     /** This variable holds the item title. */
@@ -51,7 +48,7 @@ public class BookContent implements Serializable {
      * @param SellerLocation is the given seller location.
      * @param SellerContact is the given seller contact information.
      */
-    public BookContent(String itemId, String ItemTitle, String ItemPrice, String ItemCond,
+    public ItemContent(String itemId, String ItemTitle, String ItemPrice, String ItemCond,
                        String ItemDesc, String SellerLocation, String SellerContact) {
         setItemId(itemId);
         setItemTitle(ItemTitle);
@@ -245,7 +242,7 @@ public class BookContent implements Serializable {
      *
      * @return is a String representing the reason.
      */
-    public static String parseBookJSON(String bookJSON, List<BookContent> bookList) {
+    public static String parseBookJSON(String bookJSON, List<ItemContent> bookList) {
         String reason = null;
         if (bookJSON != null) {
             try {
@@ -254,9 +251,9 @@ public class BookContent implements Serializable {
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject obj = arr.getJSONObject(i);
 
-                    BookContent book = new BookContent(obj.getString(BookContent.Item_id), obj.getString(BookContent.Item_title),
-                            obj.getString(BookContent.Item_price), obj.getString(BookContent.Item_Condition), obj.getString(BookContent.Item_description),
-                            obj.getString(BookContent.seller_location), obj.getString(BookContent.seller_contact));
+                    ItemContent book = new ItemContent(obj.getString(ItemContent.Item_id), obj.getString(ItemContent.Item_title),
+                            obj.getString(ItemContent.Item_price), obj.getString(ItemContent.Item_Condition), obj.getString(ItemContent.Item_description),
+                            obj.getString(ItemContent.seller_location), obj.getString(ItemContent.seller_contact));
 
                     bookList.add(book);
                 }

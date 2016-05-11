@@ -33,7 +33,23 @@
         <activity
             android:name=".AddBookActivity"
             android:label="@string/title_activity_add_book"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ComputerActivity"
+            android:label="@string/title_activity_computer"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CellPhoneActivity"
+            android:label="@string/title_activity_cell_phone"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".VideoGameActivity"
+            android:label="@string/title_activity_video_game"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".HouseHoldActivity"
+            android:label="@string/title_activity_house_hold"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

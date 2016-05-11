@@ -20,19 +20,15 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import tcss450.uw.edu.mynewapp.CategoryActivity;
-import tcss450.uw.edu.mynewapp.MyBookRecyclerViewAdapter;
 import tcss450.uw.edu.mynewapp.R;
-import tcss450.uw.edu.mynewapp.model.BookContent;
+
 /**
  * The SignInActivity holds the LoginFragment which is responsible
  * for implementing the login functionality.

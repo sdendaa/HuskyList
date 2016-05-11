@@ -1,59 +1,40 @@
-/*
-* HuskyList App
-* Authors: Vladimir Smirnov and Shelema Bekele
-*/
 package tcss450.uw.edu.mynewapp;
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-
 import tcss450.uw.edu.mynewapp.model.ItemContent;
-/**
- * The BookActivity holds the BookListFragment which is used
- * to display the list of books for sale.
- *
- * @author Shelema Bekele
- * @author Vladimir Smirnov
- * @version 1.0
- */
-public class BookActivity extends AppCompatActivity implements BookListFragment.OnBookListFragmentInteractionListener {
 
-    /**
-     * This method is started when the activity is created.
-     *
-     * @param savedInstanceState is the given bundle holding the saved state.
-     */
+public class ComputerActivity extends AppCompatActivity implements ComputersListFragment.OnComputerListFragmentInteractionListener {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book);
+        setContentView(R.layout.activity_computer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        BookListFragment bookListFragment = new BookListFragment();
+        ComputersListFragment computerListFragment = new ComputersListFragment();
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_book_container, bookListFragment)
+                .add(R.id.fragment_computer_container, computerListFragment)
                 .commit();
-
     }
-
     /**
      * This method is used to communiate with the itemDetailFragment.
      *
      * @param item is the given item.
      */
-    public void onBookListFragmentInteraction(ItemContent item) {
+    public void onComputerListFragmentInteraction(ItemContent item) {
         ItemDetailFragment itemDetailFragment = new ItemDetailFragment();
         Bundle args = new Bundle();
         args.putSerializable(ItemDetailFragment.ADS_ITEM_SELECTED, item);
         itemDetailFragment.setArguments(args);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_book_container, itemDetailFragment)
+                .replace(R.id.fragment_computer_container, itemDetailFragment)
                 .addToBackStack(null)
                 .commit();
-
     }
 
 }

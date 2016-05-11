@@ -3,11 +3,12 @@
 * Authors: Vladimir Smirnov and Shelema Bekele
 */
 package tcss450.uw.edu.mynewapp;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,7 @@ public class AdsAddFragment extends Fragment {
     private TextView mItemSellerLocationEditText;
     /** This variable holds the TextView for the seller contact information. */
     private TextView mItemSellerContactEditText;
+   public BookActivity activity;
 
     private final static String Ads_ADD_URL
             = "http://cssgate.insttech.washington.edu/~sdendaa/AddBooks.php?";
@@ -75,9 +77,9 @@ public class AdsAddFragment extends Fragment {
             public void onClick(View v) {
                 String url = buildCourseURL(v);
                 mListener.addBook(url);
+
             }
         });
-
 
         return v;
     }

@@ -1,8 +1,5 @@
-/*
-* HuskyList App
-* Authors: Vladimir Smirnov and Shelema Bekele
-*/
 package tcss450.uw.edu.mynewapp;
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -17,6 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+
+import tcss450.uw.edu.mynewapp.model.ItemContent;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -25,57 +25,45 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import tcss450.uw.edu.mynewapp.model.ItemContent;
 /**
- * The BookListFragment is a fragment that is used to display
- * the list of books for sale.
- *
- * @author Shelema Bekele
- * @author Vladimir Smirnov
- * @version 1.0
+ * A fragment representing a list of Items.
+ * <p/>
+ * Activities containing this fragment MUST implement the {@link OnComputerListFragmentInteractionListener}
+ * interface.
  */
-public class BookListFragment extends Fragment {
+public class ComputersListFragment extends Fragment {
     /** This constant represents the argument column count. */
     private static final String ARG_COLUMN_COUNT = "column-count";
     /** This variable represents the column count. */
     private int mColumnCount = 1;
     /** This variable holds the fragment interaction listener */
-    private OnBookListFragmentInteractionListener mListener;
+    private OnComputerListFragmentInteractionListener mListener;
     /** This variable holds the list of books for sale. */
-    private List<ItemContent> mBookList;
+    private List<ItemContent> mComputerList;
     /** This variable holds the recycler view. */
     private RecyclerView mRecyclerView;
-    /** This constant represents the book URL. */
-    private static final String BOOK_URL
-       = "http://cssgate.insttech.washington.edu/~sdendaa/husky.php?cmd=books";
+    /** This constant represents the Computer URL. */
+    private static final String COMPUTER_URL
+            = "http://cssgate.insttech.washington.edu/~sdendaa/husky.php?cmd=computers";
+
 
     /**
-     * This is the BookListFragment constructor.
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
      */
-    public BookListFragment() {
+    public ComputersListFragment() {
     }
 
-    /**
-     * This method is used to create a new instance of the
-     * BookListFragment.
-     *
-     * @param columnCount is the given column count.
-     * @return is the created fragment.
-     */
+
     @SuppressWarnings("unused")
-    public static BookListFragment newInstance(int columnCount) {
-        BookListFragment fragment = new BookListFragment();
+    public static ComputersListFragment newInstance(int columnCount) {
+        ComputersListFragment fragment = new ComputersListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
         return fragment;
     }
 
-    /**
-     * This method is called when the fragment is created.
-     *
-     * @param savedInstanceState is a bundle holding the saved state.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,9 +85,9 @@ public class BookListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_book_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_computers_list, container, false);
 
-        getActivity().setTitle("Lists of Books");
+        getActivity().setTitle("Lists of Computers");
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -110,7 +98,6 @@ public class BookListFragment extends Fragment {
             } else {
                 mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            // mRecyclerView.setAdapter(new MyBookRecyclerViewAdapter(mBookList, mListener));
         }
 
         ConnectivityManager connMgr = (ConnectivityManager)
@@ -119,7 +106,7 @@ public class BookListFragment extends Fragment {
         if (networkInfo != null && networkInfo.isConnected()) {
             CategoryActivity my = new CategoryActivity();
             DownloadBookTask task = new DownloadBookTask();
-            task.execute(new String[]{BOOK_URL});
+            task.execute(new String[]{COMPUTER_URL});
 
         }
         else {
@@ -131,6 +118,7 @@ public class BookListFragment extends Fragment {
         return view;
     }
 
+
     /**
      * This method is used to attach the fragment.
      *
@@ -139,17 +127,15 @@ public class BookListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnBookListFragmentInteractionListener) {
-            mListener = (OnBookListFragmentInteractionListener) context;
+        if (context instanceof OnComputerListFragmentInteractionListener) {
+            mListener = (OnComputerListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
         }
     }
 
-    /**
-     * This method is used to detach the fragment.
-     */
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -166,15 +152,16 @@ public class BookListFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnBookListFragmentInteractionListener {
+    public interface OnComputerListFragmentInteractionListener {
         /**
          * This method must be overridden by the activites that
          * contain this fragment.
          *
          * @param item is the given book content.
          */
-        void onBookListFragmentInteraction(ItemContent item);
+        void onComputerListFragmentInteraction(ItemContent item);
     }
+
 
     /**
      * The DownloadBookTask is used to download books from the database.
@@ -199,8 +186,8 @@ public class BookListFragment extends Fragment {
                 return;
             }
 
-            mBookList = new ArrayList<ItemContent>();
-            result = ItemContent.parseBookJSON(result, mBookList);
+            mComputerList = new ArrayList<ItemContent>();
+            result = ItemContent.parseBookJSON(result, mComputerList);
             // Something wrong with the JSON returned.
             if (result != null) {
                 Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
@@ -209,8 +196,8 @@ public class BookListFragment extends Fragment {
             }
 
             // Everything is good, show the list of courses.
-            if (!mBookList.isEmpty()) {
-                mRecyclerView.setAdapter(new MyBookRecyclerViewAdapter(mBookList, mListener));
+            if (!mComputerList.isEmpty()) {
+                mRecyclerView.setAdapter(new MyComputersRecyclerViewAdapter(mComputerList, mListener));
             }
 
         }

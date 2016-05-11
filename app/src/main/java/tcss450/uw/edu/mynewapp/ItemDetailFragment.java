@@ -12,10 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.support.design.widget.FloatingActionButton;
 
-import tcss450.uw.edu.mynewapp.Authenticate.RegisterActivity;
-import tcss450.uw.edu.mynewapp.model.BookContent;
+import tcss450.uw.edu.mynewapp.model.ItemContent;
 /**
  * The ItemDetailFragment is a fragment that represents
  * an item add.
@@ -99,9 +97,9 @@ public class ItemDetailFragment extends Fragment {
      *
      * @param content is the given BookContent.
      */
-    public void updateView(BookContent content) {
+    public void updateView(ItemContent content) {
         if (content != null) {
-//            mItemIdTextView.setText("Item ID: "+content.getItemID());
+//           mItemIdTextView.setText("Item ID: "+content.getItemID());
             mItemTitleTextView.setText("Item Tilte: "+content.getItemTitle());
             mItemPriceTextView.setText(("Item Price: "+content.getItemPrice()));
             mItemConditionTextView.setText("Item condition: "+content.getmItemCondtion());
@@ -128,7 +126,7 @@ public class ItemDetailFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             // Set article based on argument passed in
-            updateView((BookContent) args.getSerializable(ADS_ITEM_SELECTED));
+            updateView((ItemContent) args.getSerializable(ADS_ITEM_SELECTED));
         }
     }
 }

@@ -1,31 +1,28 @@
-/*
-* HuskyList App
-* Authors: Vladimir Smirnov and Shelema Bekele
-*/
 package tcss450.uw.edu.mynewapp;
+
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import tcss450.uw.edu.mynewapp.BookListFragment.OnBookListFragmentInteractionListener;
+import tcss450.uw.edu.mynewapp.HouseHoldListFragment.OnHouseHoldListFragmentInteractionListener;
 import tcss450.uw.edu.mynewapp.model.ItemContent;
 
 import java.util.List;
+
 /**
- * The MyBookRecyclerViewAdapter is the RecyclerView used
- * to display the list of books for sale.
+ * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * specified {@link OnListFragmentInteractionListener}.
  *
- * @author Shelema Bekele
- * @author Vladimir Smirnov
- * @version 1.0
  */
-public class MyBookRecyclerViewAdapter extends RecyclerView.Adapter<MyBookRecyclerViewAdapter.ViewHolder> {
+public class MyHouseHoldRecyclerViewAdapter extends RecyclerView.Adapter<MyHouseHoldRecyclerViewAdapter.ViewHolder> {
+
+
     /** This variable is used to hold the list of BookContent. */
     private final List<ItemContent> mValues;
     /** This variable is used to hold the fragment interaction listener */
-    private final OnBookListFragmentInteractionListener mListener;
+    private final OnHouseHoldListFragmentInteractionListener mListener;
 
     /**
      * This is the BookRecyclerViewAdapter constructor.
@@ -33,7 +30,7 @@ public class MyBookRecyclerViewAdapter extends RecyclerView.Adapter<MyBookRecycl
      * @param items is the given list of BookContent.
      * @param listener is the given fragment interaction listener.
      */
-    public MyBookRecyclerViewAdapter(List<ItemContent> items, OnBookListFragmentInteractionListener listener) {
+    public MyHouseHoldRecyclerViewAdapter(List<ItemContent> items, OnHouseHoldListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -48,7 +45,7 @@ public class MyBookRecyclerViewAdapter extends RecyclerView.Adapter<MyBookRecycl
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_book, parent, false);
+                .inflate(R.layout.fragment_computers, parent, false);
         return new ViewHolder(view);
     }
 
@@ -70,7 +67,7 @@ public class MyBookRecyclerViewAdapter extends RecyclerView.Adapter<MyBookRecycl
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onBookListFragmentInteraction(holder.mItem);
+                    mListener.onHouseHoldListFragmentInteraction(holder.mItem);
                 }
             }
         });

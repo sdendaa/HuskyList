@@ -14,11 +14,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import tcss450.uw.edu.mynewapp.Authenticate.RegisterActivity;
 import tcss450.uw.edu.mynewapp.Authenticate.SignInActivity;
-import tcss450.uw.edu.mynewapp.model.BookContent;
+import tcss450.uw.edu.mynewapp.model.ItemContent;
 /**
  * The CategoryActivity basically the main activity. It holds the
  * list of categories, the buttons and the logo.
@@ -27,7 +26,7 @@ import tcss450.uw.edu.mynewapp.model.BookContent;
  * @author Vladimir Smirnov
  * @version 1.0
  */
-public class CategoryActivity extends AppCompatActivity implements BookListFragment.OnListFragmentInteractionListener  {
+public class CategoryActivity extends AppCompatActivity implements BookListFragment.OnBookListFragmentInteractionListener {
 
     /**
      * This method is called when the activity is created.
@@ -66,6 +65,58 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(CategoryActivity.this, BookActivity.class);
+                startActivity(i);
+            }
+        });
+        TextView computer = (TextView) findViewById(R.id.computers);
+        computer.setOnClickListener(new View.OnClickListener() {
+            /**
+             * This method is called when the button is clicked.
+             *
+             * @param view is the given view.
+             */
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(CategoryActivity.this, ComputerActivity.class);
+                startActivity(i);
+            }
+        });
+        TextView cellPhone = (TextView) findViewById(R.id.cellphones);
+        cellPhone.setOnClickListener(new View.OnClickListener() {
+            /**
+             * This method is called when the button is clicked.
+             *
+             * @param view is the given view.
+             */
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(CategoryActivity.this, CellPhoneActivity.class);
+                startActivity(i);
+            }
+        });
+        TextView videoGame = (TextView) findViewById(R.id.video_gaming);
+        videoGame.setOnClickListener(new View.OnClickListener() {
+            /**
+             * This method is called when the button is clicked.
+             *
+             * @param view is the given view.
+             */
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(CategoryActivity.this, VideoGameActivity.class);
+                startActivity(i);
+            }
+        });
+        TextView houseHold = (TextView) findViewById(R.id.household_items);
+        houseHold.setOnClickListener(new View.OnClickListener() {
+            /**
+             * This method is called when the button is clicked.
+             *
+             * @param view is the given view.
+             */
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(CategoryActivity.this, HouseHoldActivity.class);
                 startActivity(i);
             }
         });
@@ -153,7 +204,7 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
      * @param item is the given book content.
      */
     @Override
-    public void onListFragmentInteraction(BookContent item) {
+    public void onBookListFragmentInteraction(ItemContent item) {
 
     }
 
