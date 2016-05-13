@@ -27,36 +27,36 @@ import java.util.List;
 /**
  * A fragment representing a list of Items.
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnCellPhoneListFragmentInteractionListener}
+ * Activities containing this fragment MUST implement the {@link OnVehiclesListFragmentInteractionListener}
  * interface.
  */
-public class CellPhoneListFragment extends Fragment {
+public class VehiclesListFragment extends Fragment {
     /** This constant represents the argument column count. */
     private static final String ARG_COLUMN_COUNT = "column-count";
     /** This variable represents the column count. */
     private int mColumnCount = 1;
     /** This variable holds the fragment interaction listener */
-    private OnCellPhoneListFragmentInteractionListener mListener;
+    private OnVehiclesListFragmentInteractionListener mListener;
     /** This variable holds the list of books for sale. */
-    private List<ItemContent> mCellPhoneList;
+    private List<ItemContent> mVehiclesList;
     /** This variable holds the recycler view. */
     private RecyclerView mRecyclerView;
     /** This constant represents the Computer URL. */
-    private static final String CELLPHONE_URL
-            = "http://cssgate.insttech.washington.edu/~sdendaa/husky.php?cmd=cellPhones";
+    private static final String VEHICLES_URL
+            = "http://cssgate.insttech.washington.edu/~sdendaa/husky.php?cmd=vehicles";
 
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public CellPhoneListFragment() {
+    public VehiclesListFragment() {
     }
 
 
     @SuppressWarnings("unused")
-    public static CellPhoneListFragment newInstance(int columnCount) {
-        CellPhoneListFragment fragment = new CellPhoneListFragment();
+    public static VehiclesListFragment newInstance(int columnCount) {
+        VehiclesListFragment fragment = new VehiclesListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -84,7 +84,7 @@ public class CellPhoneListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_computers_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_vehicles_list, container, false);
 
         getActivity().setTitle("Lists of Computers");
 
@@ -105,7 +105,7 @@ public class CellPhoneListFragment extends Fragment {
         if (networkInfo != null && networkInfo.isConnected()) {
             CategoryActivity my = new CategoryActivity();
             DownloadBookTask task = new DownloadBookTask();
-            task.execute(new String[]{CELLPHONE_URL});
+            task.execute(new String[]{VEHICLES_URL});
 
         }
         else {
@@ -126,8 +126,8 @@ public class CellPhoneListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnCellPhoneListFragmentInteractionListener) {
-            mListener = (OnCellPhoneListFragmentInteractionListener) context;
+        if (context instanceof OnVehiclesListFragmentInteractionListener) {
+            mListener = (OnVehiclesListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
@@ -151,14 +151,14 @@ public class CellPhoneListFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnCellPhoneListFragmentInteractionListener {
+    public interface OnVehiclesListFragmentInteractionListener {
         /**
          * This method must be overridden by the activites that
          * contain this fragment.
          *
          * @param item is the given book content.
          */
-        void onCellPhoneListFragmentInteraction(ItemContent item);
+        void onVehiclesListFragmentInteraction(ItemContent item);
     }
 
 
@@ -185,8 +185,8 @@ public class CellPhoneListFragment extends Fragment {
                 return;
             }
 
-            mCellPhoneList = new ArrayList<ItemContent>();
-            result = ItemContent.parseBookJSON(result, mCellPhoneList);
+            mVehiclesList = new ArrayList<ItemContent>();
+            result = ItemContent.parseBookJSON(result, mVehiclesList);
             // Something wrong with the JSON returned.
             if (result != null) {
                 Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
@@ -195,8 +195,8 @@ public class CellPhoneListFragment extends Fragment {
             }
 
             // Everything is good, show the list of courses.
-            if (!mCellPhoneList.isEmpty()) {
-                mRecyclerView.setAdapter(new MyCellPhoneRecyclerViewAdapter(mCellPhoneList, mListener));
+            if (!mVehiclesList.isEmpty()) {
+                mRecyclerView.setAdapter(new MyVehiclesRecyclerViewAdapter(mVehiclesList, mListener));
             }
 
         }

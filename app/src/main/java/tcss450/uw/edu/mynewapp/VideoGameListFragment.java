@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * A fragment representing a list of Items.
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
+ * Activities containing this fragment MUST implement the {@link OnVideoGameListFragmentInteractionListener}
  * interface.
  */
 public class VideoGameListFragment extends Fragment {
@@ -38,12 +38,12 @@ public class VideoGameListFragment extends Fragment {
     /** This variable holds the fragment interaction listener */
     private OnVideoGameListFragmentInteractionListener mListener;
     /** This variable holds the list of books for sale. */
-    private List<ItemContent> mComputerList;
+    private List<ItemContent> mVideoGamesList;
     /** This variable holds the recycler view. */
     private RecyclerView mRecyclerView;
     /** This constant represents the Computer URL. */
-    private static final String COMPUTER_URL
-            = "http://cssgate.insttech.washington.edu/~sdendaa/husky.php?cmd=computers";
+    private static final String VIDEOGAME_URL
+            = "http://cssgate.insttech.washington.edu/~sdendaa/husky.php?cmd=videoGames";
 
 
     /**
@@ -54,8 +54,8 @@ public class VideoGameListFragment extends Fragment {
     }
 
     @SuppressWarnings("unused")
-    public static ComputersListFragment newInstance(int columnCount) {
-        ComputersListFragment fragment = new ComputersListFragment();
+    public static VideoGameListFragment newInstance(int columnCount) {
+        VideoGameListFragment fragment = new VideoGameListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -104,7 +104,7 @@ public class VideoGameListFragment extends Fragment {
         if (networkInfo != null && networkInfo.isConnected()) {
             CategoryActivity my = new CategoryActivity();
             DownloadBookTask task = new DownloadBookTask();
-            task.execute(new String[]{COMPUTER_URL});
+            task.execute(new String[]{VIDEOGAME_URL});
 
         }
         else {
@@ -184,8 +184,8 @@ public class VideoGameListFragment extends Fragment {
                 return;
             }
 
-            mComputerList = new ArrayList<ItemContent>();
-            result = ItemContent.parseBookJSON(result, mComputerList);
+            mVideoGamesList = new ArrayList<ItemContent>();
+            result = ItemContent.parseBookJSON(result, mVideoGamesList);
             // Something wrong with the JSON returned.
             if (result != null) {
                 Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
@@ -194,8 +194,8 @@ public class VideoGameListFragment extends Fragment {
             }
 
             // Everything is good, show the list of courses.
-            if (!mComputerList.isEmpty()) {
-                mRecyclerView.setAdapter(new MyVideoGameRecyclerViewAdapter(mComputerList, mListener));
+            if (!mVideoGamesList.isEmpty()) {
+                mRecyclerView.setAdapter(new MyVideoGameRecyclerViewAdapter(mVideoGamesList, mListener));
             }
 
         }

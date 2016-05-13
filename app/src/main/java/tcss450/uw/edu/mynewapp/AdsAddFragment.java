@@ -5,10 +5,8 @@
 package tcss450.uw.edu.mynewapp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +44,7 @@ public class AdsAddFragment extends Fragment {
    public BookActivity activity;
 
     private final static String Ads_ADD_URL
-            = "http://cssgate.insttech.washington.edu/~sdendaa/AddBooks.php?";
+            = "http://cssgate.insttech.washington.edu/~sdendaa/AddHouseHold.php?";
 
 
     public AdsAddFragment() {

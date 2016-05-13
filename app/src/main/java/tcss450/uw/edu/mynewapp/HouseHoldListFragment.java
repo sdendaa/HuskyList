@@ -29,7 +29,7 @@ import tcss450.uw.edu.mynewapp.model.ItemContent;
 /**
  * A fragment representing a list of Items.
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
+ * Activities containing this fragment MUST implement the {@link OnHouseHoldListFragmentInteractionListener}
  * interface.
  */
 public class HouseHoldListFragment extends Fragment {
@@ -40,12 +40,12 @@ public class HouseHoldListFragment extends Fragment {
     /** This variable holds the fragment interaction listener */
     private OnHouseHoldListFragmentInteractionListener mListener;
     /** This variable holds the list of books for sale. */
-    private List<ItemContent> mComputerList;
+    private List<ItemContent> mHouseHoldList;
     /** This variable holds the recycler view. */
     private RecyclerView mRecyclerView;
     /** This constant represents the Computer URL. */
-    private static final String COMPUTER_URL
-            = "http://cssgate.insttech.washington.edu/~sdendaa/husky.php?cmd=computers";
+    private static final String HOUSEHOLD_URL
+            = "http://cssgate.insttech.washington.edu/~sdendaa/husky.php?cmd=houseHoldItems";
 
 
     /**
@@ -56,8 +56,8 @@ public class HouseHoldListFragment extends Fragment {
     }
 
     @SuppressWarnings("unused")
-    public static ComputersListFragment newInstance(int columnCount) {
-        ComputersListFragment fragment = new ComputersListFragment();
+    public static HouseHoldListFragment newInstance(int columnCount) {
+        HouseHoldListFragment fragment = new HouseHoldListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -106,7 +106,7 @@ public class HouseHoldListFragment extends Fragment {
         if (networkInfo != null && networkInfo.isConnected()) {
             CategoryActivity my = new CategoryActivity();
             DownloadBookTask task = new DownloadBookTask();
-            task.execute(new String[]{COMPUTER_URL});
+            task.execute(new String[]{HOUSEHOLD_URL});
 
         }
         else {
@@ -186,8 +186,8 @@ public class HouseHoldListFragment extends Fragment {
                 return;
             }
 
-            mComputerList = new ArrayList<ItemContent>();
-            result = ItemContent.parseBookJSON(result, mComputerList);
+            mHouseHoldList = new ArrayList<ItemContent>();
+            result = ItemContent.parseBookJSON(result, mHouseHoldList);
             // Something wrong with the JSON returned.
             if (result != null) {
                 Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
@@ -196,8 +196,8 @@ public class HouseHoldListFragment extends Fragment {
             }
 
             // Everything is good, show the list of courses.
-            if (!mComputerList.isEmpty()) {
-                mRecyclerView.setAdapter(new MyHouseHoldRecyclerViewAdapter(mComputerList, mListener));
+            if (!mHouseHoldList.isEmpty()) {
+                mRecyclerView.setAdapter(new MyHouseHoldRecyclerViewAdapter(mHouseHoldList, mListener));
             }
 
         }

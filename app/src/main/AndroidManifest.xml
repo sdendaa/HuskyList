@@ -49,6 +49,10 @@
         <activity
             android:name=".HouseHoldActivity"
             android:label="@string/title_activity_house_hold"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".VehiclesActivity"
+            android:label="@string/title_activity_vehicles"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

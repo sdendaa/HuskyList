@@ -12,7 +12,6 @@
     tools:context=".CategoryActivity"
     tools:showIn="@layout/activity_category">
 
-
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +26,15 @@
         android:id="@+id/books"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="250dp" />
+        android:layout_marginTop="220dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vehicles"
+        android:id="@+id/vehicles"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="260dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -60,6 +67,14 @@
         android:id="@+id/household_items"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="450dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Others"
+        android:id="@+id/others"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="500dp" />
 
     <Button
         android:layout_width="wrap_content"

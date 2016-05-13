@@ -68,6 +68,19 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
                 startActivity(i);
             }
         });
+        TextView vehicle = (TextView) findViewById(R.id.vehicles);
+        vehicle.setOnClickListener(new View.OnClickListener() {
+            /**
+             * This method is called when the button is clicked.
+             *
+             * @param view is the given view.
+             */
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(CategoryActivity.this, VehiclesActivity.class);
+                startActivity(i);
+            }
+        });
         TextView computer = (TextView) findViewById(R.id.computers);
         computer.setOnClickListener(new View.OnClickListener() {
             /**
