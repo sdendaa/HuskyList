@@ -26,7 +26,8 @@ import tcss450.uw.edu.mynewapp.model.ItemContent;
  * @author Vladimir Smirnov
  * @version 1.0
  */
-public class CategoryActivity extends AppCompatActivity implements BookListFragment.OnBookListFragmentInteractionListener {
+public class CategoryActivity extends AppCompatActivity implements BookListFragment.OnBookListFragmentInteractionListener ,
+View.OnClickListener{
 
     /**
      * This method is called when the activity is created.
@@ -39,131 +40,95 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
         setContentView(R.layout.activity_category);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        initControl();
 
-        Button addButton = (Button) findViewById(R.id.create_newAds_button);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            /**
-             * This method is called when the button is clicked.
-             *
-             * @param view is the given view.
-             */
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(CategoryActivity.this, AddBookActivity.class);
-                startActivity(i);
-
-            }
-        });
-
-        TextView book = (TextView) findViewById(R.id.books);
-        book.setOnClickListener(new View.OnClickListener() {
-            /**
-             * This method is called when the button is clicked.
-             *
-             * @param view is the given view.
-             */
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(CategoryActivity.this, BookActivity.class);
-                startActivity(i);
-            }
-        });
-        TextView vehicle = (TextView) findViewById(R.id.vehicles);
-        vehicle.setOnClickListener(new View.OnClickListener() {
-            /**
-             * This method is called when the button is clicked.
-             *
-             * @param view is the given view.
-             */
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(CategoryActivity.this, VehiclesActivity.class);
-                startActivity(i);
-            }
-        });
-        TextView computer = (TextView) findViewById(R.id.computers);
-        computer.setOnClickListener(new View.OnClickListener() {
-            /**
-             * This method is called when the button is clicked.
-             *
-             * @param view is the given view.
-             */
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(CategoryActivity.this, ComputerActivity.class);
-                startActivity(i);
-            }
-        });
-        TextView cellPhone = (TextView) findViewById(R.id.cellphones);
-        cellPhone.setOnClickListener(new View.OnClickListener() {
-            /**
-             * This method is called when the button is clicked.
-             *
-             * @param view is the given view.
-             */
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(CategoryActivity.this, CellPhoneActivity.class);
-                startActivity(i);
-            }
-        });
-        TextView videoGame = (TextView) findViewById(R.id.video_gaming);
-        videoGame.setOnClickListener(new View.OnClickListener() {
-            /**
-             * This method is called when the button is clicked.
-             *
-             * @param view is the given view.
-             */
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(CategoryActivity.this, VideoGameActivity.class);
-                startActivity(i);
-            }
-        });
-        TextView houseHold = (TextView) findViewById(R.id.household_items);
-        houseHold.setOnClickListener(new View.OnClickListener() {
-            /**
-             * This method is called when the button is clicked.
-             *
-             * @param view is the given view.
-             */
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(CategoryActivity.this, HouseHoldActivity.class);
-                startActivity(i);
-            }
-        });
-
-        Button register = (Button) findViewById(R.id.register_button);
-        register.setOnClickListener(new View.OnClickListener() {
-            /**
-             * This method is called when the button is clicked.
-             *
-             * @param view is the given view.
-             */
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(CategoryActivity.this, RegisterActivity.class);
-                startActivity(i);
-            }
-        });
-
-        Button login = (Button) findViewById(R.id.login_button);
-        login.setOnClickListener(new View.OnClickListener() {
-            /**
-             * This method is called when the button is clicked.
-             *
-             * @param view is the given view.
-             */
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(CategoryActivity.this, SignInActivity.class);
-                startActivity(i);
-
-            }
-        });
+//        Button addButton = (Button) findViewById(R.id.create_newAds_button);
+//        if(addButton != null)
+//        addButton.setOnClickListener(new View.OnClickListener() {
+//            /**
+//             * This method is called when the button is clicked.
+//             *
+//             * @param view is the given view.
+//             */
+//            @Override
+//            public void onClick(View view) {
+//                Intent i = new Intent(CategoryActivity.this, AddItemActivity.class);
+//                startActivity(i);
+//
+//            }
+//        });
     }
 
+
+    private void initControl() {
+
+        TextView book = (TextView) findViewById(R.id.books);
+        TextView vehicle = (TextView) findViewById(R.id.vehicles);
+        TextView computer = (TextView) findViewById(R.id.computers);
+        TextView cellPhone = (TextView) findViewById(R.id.cellphones);
+        TextView videoGame = (TextView) findViewById(R.id.video_gaming);
+        TextView houseHold = (TextView) findViewById(R.id.household_items);
+        Button register = (Button) findViewById(R.id.register_button);
+        Button login = (Button) findViewById(R.id.login_button);
+        Button add = (Button) findViewById(R.id.add_ads_button);
+
+        assert book != null;assert vehicle != null;assert cellPhone != null;assert add != null;
+        assert computer !=null; assert videoGame !=null; assert houseHold != null; assert register != null;
+        assert login !=null;
+      //      add.setOnClickListener(this);
+        book.setOnClickListener(this);
+        vehicle.setOnClickListener(this);
+        computer.setOnClickListener(this);
+        cellPhone.setOnClickListener(this);
+        videoGame.setOnClickListener(this);
+        houseHold.setOnClickListener(this);
+        register.setOnClickListener(this);
+        login.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.books:
+                Intent book = new Intent(this, BookActivity.class);
+                startActivity(book);
+                break;
+            case R.id.vehicles:
+                Intent vel = new Intent(this, VehiclesActivity.class);
+                startActivity(vel);
+                break;
+            case R.id.computers:
+                Intent comp = new Intent(CategoryActivity.this, ComputerActivity.class);
+                startActivity(comp);
+                break;
+            case R.id.cellphones:
+                Intent cell = new Intent(this, CellPhoneActivity.class);
+                startActivity(cell);
+                break;
+            case R.id.video_gaming:
+                Intent vid = new Intent(this, VideoGameActivity.class);
+                startActivity(vid);
+                break;
+            case R.id.household_items:
+                Intent hous = new Intent(this, HouseHoldActivity.class);
+                startActivity(hous);
+                break;
+            case R.id.login_button:
+                Intent log = new Intent(this, SignInActivity.class);
+                startActivity(log);
+                break;
+            case R.id.register_button:
+                Intent reg = new Intent(this, RegisterActivity.class);
+                startActivity(reg);
+                break;
+            case R.id.add_ads_button:
+                Intent add = new Intent(this, AddItemActivity.class);
+                startActivity(add);
+                break;
+
+        }
+    }
     /**
      * This method is called when the activity is created. It
      * is used to create the options menu.
@@ -201,7 +166,7 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
 
         if (id == R.id.action_logout && sharedPreferences.getBoolean("loggedin", false)) {
             sharedPreferences.edit().putBoolean("loggedin", false)
-                    .commit();
+                    .apply();
 
             Intent i = new Intent(this, SignInActivity.class);
             startActivity(i);
