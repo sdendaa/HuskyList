@@ -3,7 +3,6 @@
 * Authors: Vladimir Smirnov and Shelema Bekele
 */
 package tcss450.uw.edu.mynewapp;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;

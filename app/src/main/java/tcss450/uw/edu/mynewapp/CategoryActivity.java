@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import tcss450.uw.edu.mynewapp.Authenticate.RegisterActivity;
 import tcss450.uw.edu.mynewapp.Authenticate.SignInActivity;
@@ -42,21 +43,21 @@ View.OnClickListener{
         setSupportActionBar(toolbar);
         initControl();
 
-//        Button addButton = (Button) findViewById(R.id.create_newAds_button);
-//        if(addButton != null)
-//        addButton.setOnClickListener(new View.OnClickListener() {
-//            /**
-//             * This method is called when the button is clicked.
-//             *
-//             * @param view is the given view.
-//             */
-//            @Override
-//            public void onClick(View view) {
-//                Intent i = new Intent(CategoryActivity.this, AddItemActivity.class);
-//                startActivity(i);
-//
-//            }
-//        });
+        Button addButton = (Button) findViewById(R.id.create_newAds_button);
+        if(addButton != null)
+        addButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * This method is called when the button is clicked.
+             *
+             * @param view is the given view.
+             */
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(CategoryActivity.this, AddItemActivity.class);
+                startActivity(i);
+
+            }
+        });
     }
 
 
@@ -75,7 +76,7 @@ View.OnClickListener{
         assert book != null;assert vehicle != null;assert cellPhone != null;assert add != null;
         assert computer !=null; assert videoGame !=null; assert houseHold != null; assert register != null;
         assert login !=null;
-        add.setOnClickListener(this);
+      //      add.setOnClickListener(this);
         book.setOnClickListener(this);
         vehicle.setOnClickListener(this);
         computer.setOnClickListener(this);
@@ -122,10 +123,10 @@ View.OnClickListener{
                 Intent reg = new Intent(this, RegisterActivity.class);
                 startActivity(reg);
                 break;
-            case R.id.add_ads_button:
-                Intent add = new Intent(this, AddItemActivity.class);
-                startActivity(add);
-                break;
+//            case R.id.add_ads_button:
+//                Intent add = new Intent(this, AddItemActivity.class);
+//                startActivity(add);
+//                break;
 
         }
     }
@@ -159,11 +160,6 @@ View.OnClickListener{
         SharedPreferences sharedPreferences =
                 getSharedPreferences("tcss450.uw.edu.mynewapp.PREFS", Context.MODE_PRIVATE);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         if (id == R.id.action_logout && sharedPreferences.getBoolean("loggedin", false)) {
             sharedPreferences.edit().putBoolean("loggedin", false)
                     .apply();
@@ -171,6 +167,14 @@ View.OnClickListener{
             Intent i = new Intent(this, SignInActivity.class);
             startActivity(i);
             return true;
+        }else if(id == R.id.action_logout && !sharedPreferences.getBoolean("loggedin", false)){
+
+            Context context = getApplicationContext();
+            CharSequence text = "Login Here First!";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
         }
 
         return super.onOptionsItemSelected(item);

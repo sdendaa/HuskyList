@@ -5,15 +5,17 @@
 package tcss450.uw.edu.mynewapp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,10 +45,18 @@ public class AdsAddFragment extends Fragment {
     /** This variable holds the TextView for the seller contact information. */
     private TextView mItemSellerContactEditText;
    //public BookActivity activity;
-
-    private final static String Ads_ADD_URL
+   private static String CURRENT_URL
+           = "http://cssgate.insttech.washington.edu/~sdendaa/AddBooks.php?";
+    private final static String HOUSEHOLD_URL
             = "http://cssgate.insttech.washington.edu/~sdendaa/AddHouseHold.php?";
-
+    private final static String CELLPHONE_URL
+            = "http://cssgate.insttech.washington.edu/~sdendaa/AddCellPhone.php?";
+    private final static String COMPUTER_URL
+            = "http://cssgate.insttech.washington.edu/~sdendaa/AddComputer.php?";
+    private final static String VEHICLE_URL
+            = "http://cssgate.insttech.washington.edu/~sdendaa/AddVehicle.php?";
+    private final static String VIDEOGAME_URL
+            = "http://cssgate.insttech.washington.edu/~sdendaa/AddVideoGame.php?";
 
     public AdsAddFragment() {
         // Required empty public constructor
@@ -65,6 +75,40 @@ public class AdsAddFragment extends Fragment {
         mItemDescriptionEditText = (EditText) v.findViewById(R.id.add_item_Description);
         mItemSellerLocationEditText = (EditText) v.findViewById(R.id.add_item_seller_location);
         mItemSellerContactEditText = (EditText) v.findViewById(R.id.add_item_seller_contact);
+
+        final String[] items = new String[]{"Books", "Vehicles", "Computers", "Cellphones", "Video Gaming", "Household Items"};
+        Spinner spinner = (Spinner) v.findViewById(R.id.spinner1);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(v.getContext(), android.R.layout.simple_spinner_item, items);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                int theID = (int) id;
+                switch (items[theID]) {
+                    case "Household Items":
+                        CURRENT_URL = HOUSEHOLD_URL;
+                        break;
+                    case "Cellphones":
+                        CURRENT_URL = CELLPHONE_URL;
+                        break;
+                    case "Vehicles":
+                        CURRENT_URL = VEHICLE_URL;
+                        break;
+                    case "Video Gaming":
+                        CURRENT_URL = VIDEOGAME_URL;
+                        break;
+                    case "Computers":
+                        CURRENT_URL = COMPUTER_URL;
+                        break;
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 //        FloatingActionButton floatingActionButton = (FloatingActionButton)
 //                getActivity().findViewById(R.id.fab);
@@ -100,7 +144,7 @@ public class AdsAddFragment extends Fragment {
         }
     }
     private String buildCourseURL(View v) {
-        StringBuilder sb = new StringBuilder(Ads_ADD_URL);
+        StringBuilder sb = new StringBuilder(CURRENT_URL);
         try {
             String ItemId = mItemIdEditText.getText().toString();
             sb.append("Item_id=");

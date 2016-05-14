@@ -8,11 +8,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ItemDetailFragment">
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:text="Choose Category Want to Add"/>-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose Category:"
+        android:id="@+id/textView"
+        android:textSize="20dp"
+        android:layout_marginTop="80dp"
+        android:layout_gravity="center_horizontal" />
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown" />
+
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="10dp"
         android:hint="Enter the item ID here.."
         android:id="@+id/add_item_id" />
 
@@ -52,6 +71,16 @@
         android:layout_height="wrap_content"
         android:hint="Enter the item's seller contact here.."
         android:id="@+id/add_item_seller_contact" />
+    <Button
+        android:id="@+id/Image_Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@color/btn_bg"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@string/Image_text"
+        android:textColor="@color/white" />
 
     <Button
         android:layout_width="wrap_content"

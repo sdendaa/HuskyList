@@ -19,4 +19,7 @@
     <string name="title_activity_house_hold">HouseHoldActivity</string>
     <string name="title_activity_vehicles">VehiclesActivity</string>
     <string name="edit_text">Edit This Ads</string>
+    <color name="btn_bg">#277bec</color>
+    <color name="white">#ffffff</color>
+    <string name="Image_text"> Upload Image</string>
 </resources>
