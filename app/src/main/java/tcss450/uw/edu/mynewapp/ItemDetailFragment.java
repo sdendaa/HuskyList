@@ -89,6 +89,14 @@ public class ItemDetailFragment extends Fragment {
                 startActivity(Intent.createChooser(emailIntent, "Chooser Title"));
             }
         });
+        Button edit = (Button) view.findViewById(R.id.edit_button);
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(getActivity(), AddItemActivity.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 

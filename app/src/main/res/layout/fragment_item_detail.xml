@@ -49,5 +49,12 @@
         android:autoLink="email"
         android:id="@+id/contact_seller_button"
         android:text="@string/contact_seller_text" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:autoLink=""
+        android:id="@+id/edit_button"
+        android:text="@string/edit_text" />
 
 </LinearLayout>

@@ -75,7 +75,7 @@ View.OnClickListener{
         assert book != null;assert vehicle != null;assert cellPhone != null;assert add != null;
         assert computer !=null; assert videoGame !=null; assert houseHold != null; assert register != null;
         assert login !=null;
-      //      add.setOnClickListener(this);
+        add.setOnClickListener(this);
         book.setOnClickListener(this);
         vehicle.setOnClickListener(this);
         computer.setOnClickListener(this);

@@ -29,7 +29,7 @@ import java.net.URL;
  * @author Vladimir Smirnov
  * @version 1.0
  */
-public class AddBookActivity extends AppCompatActivity implements AdsAddFragment.BookAddListener{
+public class AddItemActivity extends AppCompatActivity implements AdsAddFragment.BookAddListener{
 
     /**
      * This method is called when the activity is created.
