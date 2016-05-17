@@ -1,104 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:orientation="horizontal"
-    android:id="@+id/main"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".CategoryActivity"
-    tools:showIn="@layout/activity_category">
+    android:fillViewport="true"> <!--IMPORTANT otherwise backgrnd img. will not fill the whole screen -->
 
-    <ImageView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/logo"
-        android:src="@drawable/logo"
-        android:layout_marginBottom="400dp" />
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Books"
-        android:id="@+id/books"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="220dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/logo"
+            android:src="@drawable/logo"
+            android:layout_marginBottom="400dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Vehicles"
-        android:id="@+id/vehicles"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="260dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Books"
+            android:id="@+id/books"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="220dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Computers"
-        android:id="@+id/computers"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="300dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vehicles"
+            android:id="@+id/vehicles"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="260dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cellphones"
-        android:id="@+id/cellphones"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="350dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Computers"
+            android:id="@+id/computers"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="300dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Video Gaming"
-        android:id="@+id/video_gaming"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="400dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cellphones"
+            android:id="@+id/cellphones"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="350dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Household Items"
-        android:id="@+id/household_items"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="450dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Video Gaming"
+            android:id="@+id/video_gaming"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="400dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Others"
-        android:id="@+id/others"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="500dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Household Items"
+            android:id="@+id/household_items"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="450dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Register"
-        android:id="@+id/register_button"
-        android:layout_marginTop="750dp"
-        android:layout_marginLeft="130dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Others"
+            android:id="@+id/others"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="500dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:id="@+id/register_button"
+            android:layout_marginTop="750dp"
+            android:layout_marginLeft="130dp" />
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:id="@+id/login_button"
-        android:layout_marginTop="750dp"
-        android:layout_marginLeft="219dp" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:id="@+id/login_button"
+            android:layout_marginTop="750dp"
+            android:layout_marginLeft="219dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create New Ads"
-        android:id="@+id/create_newAds_button"
-        android:layout_marginTop="750dp"
-        android:layout_marginLeft="309dp" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create New Ads"
+            android:id="@+id/create_newAds_button"
+            android:layout_marginTop="750dp"
+            android:layout_marginLeft="309dp" />
 
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

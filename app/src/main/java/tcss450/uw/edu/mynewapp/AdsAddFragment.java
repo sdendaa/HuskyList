@@ -5,6 +5,7 @@
 package tcss450.uw.edu.mynewapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -15,11 +16,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.net.URLEncoder;
+
 /**
  * The AdsAddFragment is responsible for creating new ads.
  *
@@ -31,7 +34,7 @@ public class AdsAddFragment extends Fragment {
     /** This variable holds the book add listener. */
     private BookAddListener mListener;
     /** This variable holds the EditText for the item ID. */
-    private EditText mItemIdEditText;
+   // private EditText mItemIdEditText;
     /** This variable holds the TextView for the item title. */
     private TextView mItemTitleEditText;
     /** This variable holds the TextView for the item price. */
@@ -44,6 +47,8 @@ public class AdsAddFragment extends Fragment {
     private TextView mItemSellerLocationEditText;
     /** This variable holds the TextView for the seller contact information. */
     private TextView mItemSellerContactEditText;
+    private ImageView  mItemImage;
+
    //public BookActivity activity;
    private static String CURRENT_URL
            = "http://cssgate.insttech.washington.edu/~sdendaa/AddBooks.php?";
@@ -68,13 +73,16 @@ public class AdsAddFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_ads_add, container, false);
-        mItemIdEditText = (EditText) v.findViewById(R.id.add_item_id);
+       // mItemIdEditText = (EditText) v.findViewById(R.id.add_item_id);
         mItemTitleEditText = (EditText) v.findViewById(R.id.add_item_title);
         mItemPriceEditText = (EditText) v.findViewById(R.id.add_item_price);
         mItemConditionEditText = (EditText) v.findViewById(R.id.add_item_condition);
         mItemDescriptionEditText = (EditText) v.findViewById(R.id.add_item_Description);
         mItemSellerLocationEditText = (EditText) v.findViewById(R.id.add_item_seller_location);
         mItemSellerContactEditText = (EditText) v.findViewById(R.id.add_item_seller_contact);
+        mItemImage = (ImageView)v.findViewById(R.id.image_Display);
+
+
 
         final String[] items = new String[]{"Books", "Vehicles", "Computers", "Cellphones", "Video Gaming", "Household Items"};
         Spinner spinner = (Spinner) v.findViewById(R.id.spinner1);
@@ -120,11 +128,22 @@ public class AdsAddFragment extends Fragment {
             public void onClick(View v) {
                 String url = buildCourseURL(v);
                 mListener.addBook(url);
-//                Intent intent = new Intent(getActivity(), BookActivity.class);
+//                Intent intent = new Intent(getActivity(), Book  Activity.class);
 //                startActivity(intent);
 //                setAllowEnterTransitionOverlap(true);
             }
         });
+        //Up load button
+        Button upload_btn = (Button) v.findViewById(R.id.Image_Button);
+        upload_btn.setOnClickListener( new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                // To open up a gallery browser
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"),1);
+            }});
 
         return v;
     }
@@ -146,9 +165,9 @@ public class AdsAddFragment extends Fragment {
     private String buildCourseURL(View v) {
         StringBuilder sb = new StringBuilder(CURRENT_URL);
         try {
-            String ItemId = mItemIdEditText.getText().toString();
-            sb.append("Item_id=");
-            sb.append(ItemId);
+//            String ItemId = mItemIdEditText.getText().toString();
+//            sb.append("Item_id=");
+//            sb.append(ItemId);
 
             String ItemTitle = mItemTitleEditText.getText().toString();
             sb.append("&Item_Title=");
@@ -173,6 +192,10 @@ public class AdsAddFragment extends Fragment {
             String SellerContact = mItemSellerContactEditText.getText().toString();
             sb.append("&Seller_contact=");
             sb.append(URLEncoder.encode(SellerContact, "UTF-8"));
+
+//            String ItamImage = mItemImage.getImageMatrix().toString();
+//            sb.append("&Item_image=");
+//            sb.append(URLEncoder.encode(ItamImage, "UTF-8"));
 
             Log.i("AdsAddFragment", sb.toString());
         }
