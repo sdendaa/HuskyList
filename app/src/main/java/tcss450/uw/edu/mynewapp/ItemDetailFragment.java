@@ -4,8 +4,7 @@
 */
 package tcss450.uw.edu.mynewapp;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,10 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.InputStream;
 
 import tcss450.uw.edu.mynewapp.model.ItemContent;
 /**
@@ -29,7 +26,7 @@ import tcss450.uw.edu.mynewapp.model.ItemContent;
  */
 public class ItemDetailFragment extends Fragment {
     /** This variable is a TextView that holds the item ID. */
-    //private TextView mItemIdTextView;
+    private TextView mSellerUserNameTextView;
     /** This variable is a TextView that holds the item title. */
     private TextView mItemTitleTextView;
     /** This variable is a TextView that holds the item price. */
@@ -42,7 +39,6 @@ public class ItemDetailFragment extends Fragment {
     private TextView mItemSellerLocationTextView;
     /** This variable is a TextView that holds the seller contact information. */
     private TextView mItemSellerContactTextView;
-    //private ImageView mIemImageView;
     /** This variable is a String that holds the given email. */
     private String mEmail;
     /** This variable is a String that holds the given password. */
@@ -72,14 +68,13 @@ public class ItemDetailFragment extends Fragment {
         getActivity().setTitle(mTitle);
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_item_detail, container, false);
-       // mItemIdTextView = (TextView) view.findViewById(R.id.item_id);
+        mSellerUserNameTextView = (TextView) view.findViewById(R.id.add_Seller_userName);
         mItemTitleTextView = (TextView) view.findViewById(R.id.item_title);
         mItemPriceTextView = (TextView) view.findViewById(R.id.item_price);
         mItemConditionTextView = (TextView) view.findViewById(R.id.item_condition);
         mItemDescriptionTextView = (TextView) view.findViewById(R.id.item_Description);
         mItemSellerLocationTextView = (TextView) view.findViewById(R.id.item_seller_location);
         mItemSellerContactTextView = (TextView) view.findViewById(R.id.item_seller_contact);
-       // mIemImageView = (ImageView) view.findViewById(R.id.image_Display);
 
         Button contact_seller = (Button) view.findViewById(R.id.contact_seller_button);
         contact_seller.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +110,7 @@ public class ItemDetailFragment extends Fragment {
      */
     public void updateView(ItemContent content) {
         if (content != null) {
-//           mItemIdTextView.setText("Item ID: "+content.getItemID());
+           // mSellerUserNameTextView.setText("Seller USerName: "+content.getSellerUserName());
             mItemTitleTextView.setText("Item Tilte: "+content.getItemTitle());
             mItemPriceTextView.setText(("Item Price: "+content.getItemPrice()));
             mItemConditionTextView.setText("Item condition: "+content.getmItemCondtion());

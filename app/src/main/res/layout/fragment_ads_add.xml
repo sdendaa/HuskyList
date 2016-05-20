@@ -1,95 +1,102 @@
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_container"
-    android:name="tcss450.uw.mynewapp.AdsAddFragment"
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ItemDetailFragment">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choose Category:"
-        android:id="@+id/textView"
-        android:textSize="20dp"
-        android:layout_marginTop="80dp"
-        android:layout_gravity="center_horizontal" />
-    <Spinner
-        android:id="@+id/spinner1"
+    android:fillViewport="true">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/fragment_container"
+        android:name="tcss450.uw.mynewapp.AdsAddFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown" />
+
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ItemDetailFragment">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Category:"
+            android:id="@+id/textView"
+            android:textSize="20dp"
+            android:layout_marginTop="80dp"
+            android:layout_gravity="center_horizontal" />
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown" />
 
 
-    <!--<EditText-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--android:hint="Enter the item ID here.."-->
-        <!--android:id="@+id/add_item_id" />-->
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Enter Seller username here.."
+            android:id="@+id/add_Seller_userName" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter the item title here.."
-        android:id="@+id/add_item_title" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter the item title here.."
+            android:id="@+id/add_item_title" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter the item price here.."
-        android:id="@+id/add_item_price" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter the item price here.."
+            android:id="@+id/add_item_price" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter the item condition here.."
-        android:id="@+id/add_item_condition" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter the item condition here.."
+            android:id="@+id/add_item_condition" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter the item description here.."
-        android:id="@+id/add_item_Description" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter the item description here.."
+            android:id="@+id/add_item_Description" />
 
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter the item's saler location here.."
-        android:id="@+id/add_item_seller_location" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter the item's seller location here.."
+            android:id="@+id/add_item_seller_location" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter the item's seller contact here.."
-        android:id="@+id/add_item_seller_contact" />
-    <Button
-        android:id="@+id/Image_Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:background="@color/btn_bg"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:text="@string/Image_text"
-        android:textColor="@color/white" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter the item's seller contact here.."
+            android:id="@+id/add_item_seller_contact" />
+        <Button
+            android:id="@+id/Image_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@color/btn_bg"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/Image_text"
+            android:textColor="@color/white" />
 
-    <ImageView
-        android:id="@+id/image_Display"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/image_Display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:id="@+id/add_ads_button"
-        android:text="@string/add_item_text"
-        android:onClick="addAds" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:id="@+id/add_ads_button"
+            android:text="@string/add_item_text"
+            android:onClick="addAds" />
 
-</LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

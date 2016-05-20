@@ -3,20 +3,14 @@
 * Authors: Vladimir Smirnov and Shelema Bekele
 */
 package tcss450.uw.edu.mynewapp.model;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.List;
 import java.lang.String;
-import java.util.Objects;
 
 /**
  * The BookContent is the model class that represents a "Book".
@@ -27,7 +21,7 @@ import java.util.Objects;
  */
 public class ItemContent implements Serializable {
 //    /** This variable holds the item ID. */
-//    private String mItem_id;
+    private String mItem_id;
     /** This variable holds the item title. */
     private String mItem_title;
     /** This variable holds the item price. */
@@ -40,10 +34,10 @@ public class ItemContent implements Serializable {
     private String mSeller_location;
     /** This variable holds the seller contact information. */
     private String mSeller_contact;
-    //private String mItem_image;
+    private String mSeller_userName;
 
     /** This variable holds the database variable names. */
-    public static final String Item_title = "Item_Title", Item_price = "Item_price",
+    public static final String seller_userName= "Seller_userName", Item_id = "Item_id",Item_title = "Item_title", Item_price = "Item_price",
             Item_Condition = "Item_condition", Item_description = "Item_descriptions",
             seller_location = "Seller_location", seller_contact = "Seller_contact";
 
@@ -59,33 +53,29 @@ public class ItemContent implements Serializable {
      * @param SellerLocation is the given seller location.
      * @param SellerContact is the given seller contact information.
      */
-    public ItemContent(String ItemTitle, String ItemPrice, String ItemCond,
+    public ItemContent(String SellerUserName, String ItemTitle, String ItemPrice, String ItemCond,
                        String ItemDesc, String SellerLocation, String SellerContact) {
-       // setItemId(itemId);
+        setSellerUserName(SellerUserName);
+       // setItemId(ItemId);
         setItemTitle(ItemTitle);
         setItemPrice(ItemPrice);
         setItemCondition(ItemCond);
         setItemDescription(ItemDesc);
         setSellerLocation(SellerLocation);
         setSellerContact(SellerContact);
-        //setItemImage(ItemImage);
 
     }
 
-//    /**
-//     * This method sets the item ID.
-//     *
-//     * @param ItemImage is the given item ID.
-//     */
-//    public void setItemImage(Bitmap ItemImage) {
-//
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        ItemImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
-//        byte[] b = baos.toByteArray();
-//        String temp = Base64.encodeToString(b, Base64.DEFAULT);
-//
-//        mItem_image = temp;
-//    }
+    /**
+     * This method sets the item ID.
+     *
+     * @param ItemId is the given item ID.
+     */
+    public void setItemId(String ItemId) {
+        if(ItemId == null)
+            throw new IllegalArgumentException("Item Id must be supplies");
+        mItem_id = ItemId;
+    }
 
     /**
      * This method sets the item title.
@@ -164,9 +154,22 @@ public class ItemContent implements Serializable {
     public void setSellerContact(String sellerContact) {
         if(sellerContact == null)
             throw new IllegalArgumentException("Course Id must be supplies");
-        if(sellerContact.length() < 5)
-            throw new IllegalArgumentException("Course Id must be at least five character");
+//        if(sellerContact.length() < 3)
+//            throw new IllegalArgumentException("Course Id must be at least five character");
         mSeller_contact = sellerContact;
+
+    }
+    /**
+     * This method sets the sellers contact information.
+     *
+     * @param sellerUserName is the given seller contact information.
+     */
+    public void setSellerUserName(String sellerUserName) {
+        if(sellerUserName == null)
+            throw new IllegalArgumentException("Course Id must be supplies");
+//        if(sellerContact.length() < 3)
+//            throw new IllegalArgumentException("Course Id must be at least five character");
+        mSeller_userName = sellerUserName;
 
     }
 
@@ -179,18 +182,15 @@ public class ItemContent implements Serializable {
         return mItem_title;
     }
 
-//    /**
-//     * This method gets the item ID.
-//     *
-//     * @return is the given ID.
-//     */
-//    public String getItemImage(Bitmap image) {
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        image.compress(Bitmap.CompressFormat.PNG, 100, baos);
-//        byte[] b = baos.toByteArray();
-//        String temp = Base64.encodeToString(b, Base64.DEFAULT);
-//        return temp;
-//    }
+    /**
+     * This method gets the item ID.
+     *
+     * @return is the given ID.
+     */
+    public String getItemID() {
+        return mItem_id;
+
+    }
     /**
      * This method gets the item price.
      *
@@ -235,6 +235,15 @@ public class ItemContent implements Serializable {
     public String getSellerContact() {
         return mSeller_contact;
     }
+    /**
+     * This method gets the sellers contact information.
+     *
+     * @return is the given contact information.
+     */
+    public String getSellerUserName() {
+        return mSeller_userName;
+    }
+
 
     /**
      * This method is used to represent the item in a String.
@@ -244,13 +253,14 @@ public class ItemContent implements Serializable {
     @Override
     public String toString() {
         return "edu.UW.sdendaa.HuskyList.SubCategory.SubCategoryContent{" +
-               // ", mItemId = " + mItem_id + '\'' +
+                ", mItemId = " + mSeller_userName + '\'' +
                 ", mItemTitle = " + mItem_title + '\'' +
                 ", mItemPrice = " + mItem_price + '\'' +
                 ", mItemCondition = " + mItem_condition + '\'' +
                 ", mItemSubcategory = " + mItem_description + '\'' +
-                ", mSalerLocation = " + mSeller_location +  '\'' +
-                ", mItemDescription = " + mSeller_contact + '}';
+                ", mSellerLocation = " + mSeller_location +  '\'' +
+                ", mItemDescription = " + mSeller_contact + '\''+
+                ", mItemDescription = " + mSeller_userName + '}';
     }
 
     /**
@@ -270,10 +280,10 @@ public class ItemContent implements Serializable {
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject obj = arr.getJSONObject(i);
 
-                    ItemContent book = new ItemContent(obj.getString(ItemContent.Item_title),
-                            obj.getString(ItemContent.Item_price), obj.getString(ItemContent.Item_Condition),
-                            obj.getString(ItemContent.Item_description), obj.getString(ItemContent.seller_location),
-                            obj.getString(ItemContent.seller_contact));
+                    ItemContent book = new ItemContent(obj.getString(ItemContent.seller_userName),
+                          obj.getString(ItemContent.Item_title), obj.getString(ItemContent.Item_price),
+                            obj.getString(ItemContent.Item_Condition), obj.getString(ItemContent.Item_description),
+                            obj.getString(ItemContent.seller_location), obj.getString(ItemContent.seller_contact));
 
                     bookList.add(book);
                 }

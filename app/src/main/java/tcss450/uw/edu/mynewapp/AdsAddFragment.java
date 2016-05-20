@@ -16,7 +16,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +33,9 @@ public class AdsAddFragment extends Fragment {
     /** This variable holds the book add listener. */
     private BookAddListener mListener;
     /** This variable holds the EditText for the item ID. */
-   // private EditText mItemIdEditText;
+    private EditText mSellerUserName;
+//    /** This variable holds the EditText for the item ID. */
+//    private EditText mItemIdEditText;
     /** This variable holds the TextView for the item title. */
     private TextView mItemTitleEditText;
     /** This variable holds the TextView for the item price. */
@@ -47,7 +48,7 @@ public class AdsAddFragment extends Fragment {
     private TextView mItemSellerLocationEditText;
     /** This variable holds the TextView for the seller contact information. */
     private TextView mItemSellerContactEditText;
-    private ImageView  mItemImage;
+    //private ImageView  mItemImage;
 
    //public BookActivity activity;
    private static String CURRENT_URL
@@ -73,6 +74,7 @@ public class AdsAddFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_ads_add, container, false);
+        mSellerUserName = (EditText) v.findViewById(R.id.add_Seller_userName);
        // mItemIdEditText = (EditText) v.findViewById(R.id.add_item_id);
         mItemTitleEditText = (EditText) v.findViewById(R.id.add_item_title);
         mItemPriceEditText = (EditText) v.findViewById(R.id.add_item_price);
@@ -80,7 +82,7 @@ public class AdsAddFragment extends Fragment {
         mItemDescriptionEditText = (EditText) v.findViewById(R.id.add_item_Description);
         mItemSellerLocationEditText = (EditText) v.findViewById(R.id.add_item_seller_location);
         mItemSellerContactEditText = (EditText) v.findViewById(R.id.add_item_seller_contact);
-        mItemImage = (ImageView)v.findViewById(R.id.image_Display);
+       // mItemImage = (ImageView)v.findViewById(R.id.image_Display);
 
 
 
@@ -118,9 +120,6 @@ public class AdsAddFragment extends Fragment {
             }
         });
 
-//        FloatingActionButton floatingActionButton = (FloatingActionButton)
-//                getActivity().findViewById(R.id.fab);
-//        floatingActionButton.hide();
         getActivity().setTitle("Create New Ads");
         Button addAdseButton = (Button) v.findViewById(R.id.add_ads_button);
         addAdseButton.setOnClickListener(new View.OnClickListener() {
@@ -128,11 +127,9 @@ public class AdsAddFragment extends Fragment {
             public void onClick(View v) {
                 String url = buildCourseURL(v);
                 mListener.addBook(url);
-//                Intent intent = new Intent(getActivity(), Book  Activity.class);
-//                startActivity(intent);
-//                setAllowEnterTransitionOverlap(true);
             }
         });
+
         //Up load button
         Button upload_btn = (Button) v.findViewById(R.id.Image_Button);
         upload_btn.setOnClickListener( new View.OnClickListener(){
@@ -165,12 +162,16 @@ public class AdsAddFragment extends Fragment {
     private String buildCourseURL(View v) {
         StringBuilder sb = new StringBuilder(CURRENT_URL);
         try {
+            String SellerUsername = mSellerUserName.getText().toString();
+            sb.append("Seller_userName=");
+            sb.append(SellerUsername);
+
 //            String ItemId = mItemIdEditText.getText().toString();
-//            sb.append("Item_id=");
-//            sb.append(ItemId);
+//            sb.append("&Item_id=");
+//            sb.append(URLEncoder.encode(ItemId,"UTF-8"));
 
             String ItemTitle = mItemTitleEditText.getText().toString();
-            sb.append("&Item_Title=");
+            sb.append("&Item_title=");
             sb.append(URLEncoder.encode(ItemTitle, "UTF-8"));
 
             String ItemPrice = mItemPriceEditText.getText().toString();
@@ -192,10 +193,6 @@ public class AdsAddFragment extends Fragment {
             String SellerContact = mItemSellerContactEditText.getText().toString();
             sb.append("&Seller_contact=");
             sb.append(URLEncoder.encode(SellerContact, "UTF-8"));
-
-//            String ItamImage = mItemImage.getImageMatrix().toString();
-//            sb.append("&Item_image=");
-//            sb.append(URLEncoder.encode(ItamImage, "UTF-8"));
 
             Log.i("AdsAddFragment", sb.toString());
         }
