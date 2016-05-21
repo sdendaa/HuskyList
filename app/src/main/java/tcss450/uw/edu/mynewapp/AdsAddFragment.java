@@ -166,10 +166,6 @@ public class AdsAddFragment extends Fragment {
             sb.append("Seller_userName=");
             sb.append(SellerUsername);
 
-//            String ItemId = mItemIdEditText.getText().toString();
-//            sb.append("&Item_id=");
-//            sb.append(URLEncoder.encode(ItemId,"UTF-8"));
-
             String ItemTitle = mItemTitleEditText.getText().toString();
             sb.append("&Item_title=");
             sb.append(URLEncoder.encode(ItemTitle, "UTF-8"));

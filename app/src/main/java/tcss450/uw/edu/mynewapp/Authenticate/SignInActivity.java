@@ -62,13 +62,7 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
                     .add(R.id.fragment_container, new LoginFragment())
                     .commit();
         }
-        else {
-            Toast.makeText(getApplicationContext(), "Already logged in!"
-                    , Toast.LENGTH_LONG)
-                    .show();
-            Intent i = new Intent(this, CategoryActivity.class);
-            startActivity(i);
-        }
+
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();

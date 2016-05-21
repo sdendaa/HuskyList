@@ -37,7 +37,8 @@ public class ItemContent implements Serializable {
     private String mSeller_userName;
 
     /** This variable holds the database variable names. */
-    public static final String seller_userName= "Seller_userName", Item_id = "Item_id",Item_title = "Item_title", Item_price = "Item_price",
+    public static final String seller_userName= "Seller_userName", Item_id = "Item_id",
+            Item_title = "Item_title", Item_price = "Item_price",
             Item_Condition = "Item_condition", Item_description = "Item_descriptions",
             seller_location = "Seller_location", seller_contact = "Seller_contact";
 

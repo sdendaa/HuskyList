@@ -28,7 +28,7 @@ import tcss450.uw.edu.mynewapp.model.ItemContent;
  * @version 1.0
  */
 public class CategoryActivity extends AppCompatActivity implements BookListFragment.OnBookListFragmentInteractionListener ,
-View.OnClickListener{
+        View.OnClickListener{
 
     /**
      * This method is called when the activity is created.
@@ -45,19 +45,31 @@ View.OnClickListener{
 
         Button addButton = (Button) findViewById(R.id.create_newAds_button);
         if(addButton != null)
-        addButton.setOnClickListener(new View.OnClickListener() {
-            /**
-             * This method is called when the button is clicked.
-             *
-             * @param view is the given view.
-             */
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(CategoryActivity.this, AddItemActivity.class);
-                startActivity(i);
+            addButton.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * This method is called when the button is clicked.
+                 *
+                 * @param view is the given view.
+                 */
+                @Override
+                public void onClick(View view) {
+                    SharedPreferences sharedPreferences =
+                            getSharedPreferences("tcss450.uw.edu.mynewapp.PREFS", Context.MODE_PRIVATE);
 
-            }
-        });
+                    if (sharedPreferences.getBoolean("loggedin", false)) {
+                        Intent i = new Intent(CategoryActivity.this, AddItemActivity.class);
+                        startActivity(i);
+                    } else {
+                        Context context = getApplicationContext();
+                        CharSequence text = "You must login first!";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
+
+                }
+            });
     }
 
 
@@ -76,7 +88,7 @@ View.OnClickListener{
         assert book != null;assert vehicle != null;assert cellPhone != null;assert add != null;
         assert computer !=null; assert videoGame !=null; assert houseHold != null; assert register != null;
         assert login !=null;
-      //      add.setOnClickListener(this);
+        //      add.setOnClickListener(this);
         book.setOnClickListener(this);
         vehicle.setOnClickListener(this);
         computer.setOnClickListener(this);
@@ -90,6 +102,8 @@ View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+        SharedPreferences sharedPreferences =
+                getSharedPreferences("tcss450.uw.edu.mynewapp.PREFS", Context.MODE_PRIVATE);
         switch (v.getId()) {
             case R.id.books:
                 Intent book = new Intent(this, BookActivity.class);
@@ -116,8 +130,17 @@ View.OnClickListener{
                 startActivity(hous);
                 break;
             case R.id.login_button:
-                Intent log = new Intent(this, SignInActivity.class);
-                startActivity(log);
+                if (!sharedPreferences.getBoolean("loggedin", false)) {
+                    Intent log = new Intent(this, SignInActivity.class);
+                    startActivity(log);
+                } else {
+                    Context context = getApplicationContext();
+                    CharSequence text = "Already logged in!";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
                 break;
             case R.id.register_button:
                 Intent reg = new Intent(this, RegisterActivity.class);
@@ -170,7 +193,7 @@ View.OnClickListener{
         }else if(id == R.id.action_logout && !sharedPreferences.getBoolean("loggedin", false)){
 
             Context context = getApplicationContext();
-            CharSequence text = "Login Here First!";
+            CharSequence text = "You must login first!";
             int duration = Toast.LENGTH_SHORT;
 
             Toast toast = Toast.makeText(context, text, duration);
