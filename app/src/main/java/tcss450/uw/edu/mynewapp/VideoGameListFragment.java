@@ -45,6 +45,8 @@ public class VideoGameListFragment extends Fragment {
     private static final String VIDEOGAME_URL
             = "http://cssgate.insttech.washington.edu/~sdendaa/husky.php?cmd=videoGames";
 
+    private SQLite mSQLite;
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -85,7 +87,7 @@ public class VideoGameListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_computers_list, container, false);
 
-        getActivity().setTitle("Lists of Computers");
+        getActivity().setTitle("Lists of Video Games");
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -98,6 +100,9 @@ public class VideoGameListFragment extends Fragment {
             }
         }
 
+        DownloadBookTask task1 = new DownloadBookTask();
+        task1.execute(new String[]{VIDEOGAME_URL});
+
         ConnectivityManager connMgr = (ConnectivityManager)
                 getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -108,9 +113,16 @@ public class VideoGameListFragment extends Fragment {
 
         }
         else {
-            Toast.makeText(view.getContext(),
-                    "No network connection available. Cannot display courses",
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(view.getContext(),
+//                    "No network connection available. Cannot display courses",
+//                    Toast.LENGTH_SHORT).show();
+            if (mSQLite == null) {
+                mSQLite = new SQLite(view.getContext(), "VideoGame");
+            }
+            if (mVideoGamesList == null) {;
+                mVideoGamesList = mSQLite.getItems();
+            }
+            mRecyclerView.setAdapter(new MyVideoGameRecyclerViewAdapter(mVideoGamesList, mListener));
         }
 
         return view;
@@ -179,21 +191,47 @@ public class VideoGameListFragment extends Fragment {
         protected void onPostExecute(String result) {
             // Something wrong with the network or the URL.
             if (result.startsWith("Unable to")) {
-                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
-                        .show();
+//                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
+//                        .show();
                 return;
             }
 
             mVideoGamesList = new ArrayList<ItemContent>();
-            result = ItemContent.parseBookJSON(result, mVideoGamesList);
+            result = ItemContent.parseItemContentJSON(result, mVideoGamesList);
             // Something wrong with the JSON returned.
             if (result != null) {
-                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
-                        .show();
+//                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
+//                        .show();
                 return;
             }
 
-            // Everything is good, show the list of courses.
+            if (!mVideoGamesList.isEmpty()) {
+                mRecyclerView.setAdapter(new MyVideoGameRecyclerViewAdapter(mVideoGamesList, mListener));
+
+                if (mSQLite == null) {
+                    mSQLite = new SQLite(getActivity(), "VideoGame");
+                }
+
+                // Delete old data so that you can refresh the local
+                // database with the network data.
+                mSQLite.deleteItems();
+//                Toast.makeText(getActivity().getApplicationContext(), mBookList.size(), Toast.LENGTH_LONG);
+                // Also, add to the local database
+                System.out.println(mVideoGamesList.size());
+                for (int i=0; i<mVideoGamesList.size(); i++) {
+                    ItemContent item = mVideoGamesList.get(i);
+                    System.out.println(item.getSellerUserName());
+                    mSQLite.insertItem(item.getSellerUserName(),
+                            item.getItemTitle(),
+                            item.getItemPrice(),
+                            item.getmItemCondtion(),
+                            item.getItemDescription(),
+                            item.getSellerLocation(),
+                            item.getSellerContact());
+                }
+
+            }
+
             if (!mVideoGamesList.isEmpty()) {
                 mRecyclerView.setAdapter(new MyVideoGameRecyclerViewAdapter(mVideoGamesList, mListener));
             }
@@ -224,8 +262,8 @@ public class VideoGameListFragment extends Fragment {
                     }
 
                 } catch (Exception e) {
-                    response = "Unable to download the list of courses, Reason: "
-                            + e.getMessage();
+//                    response = "Unable to download the list of courses, Reason: "
+//                            + e.getMessage();
                 }
                 finally {
                     if (urlConnection != null)

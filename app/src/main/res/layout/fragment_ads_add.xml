@@ -30,12 +30,12 @@
             android:spinnerMode="dropdown" />
 
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="Enter Seller username here.."
-            android:id="@+id/add_Seller_userName" />
+        <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:hint="Enter Seller username here.."-->
+            <!--android:id="@+id/add_Seller_userName" />-->
 
         <EditText
             android:layout_width="match_parent"

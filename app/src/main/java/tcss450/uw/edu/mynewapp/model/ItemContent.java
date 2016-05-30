@@ -20,8 +20,8 @@ import java.lang.String;
  * @version 1.0
  */
 public class ItemContent implements Serializable {
-//    /** This variable holds the item ID. */
-    private String mItem_id;
+    //    /** This variable holds the item ID. */
+    private int mItem_id;
     /** This variable holds the item title. */
     private String mItem_title;
     /** This variable holds the item price. */
@@ -34,6 +34,7 @@ public class ItemContent implements Serializable {
     private String mSeller_location;
     /** This variable holds the seller contact information. */
     private String mSeller_contact;
+
     private String mSeller_userName;
 
     /** This variable holds the database variable names. */
@@ -46,7 +47,7 @@ public class ItemContent implements Serializable {
     /**
      * This is the BookContent constructor.
      *
-    // * @param itemId is the given item id.
+     // * @param itemId is the given item id.
      * @param ItemTitle is the given item title.
      * @param ItemPrice is the given item price.
      * @param ItemCond is the given item condition.
@@ -57,7 +58,7 @@ public class ItemContent implements Serializable {
     public ItemContent(String SellerUserName, String ItemTitle, String ItemPrice, String ItemCond,
                        String ItemDesc, String SellerLocation, String SellerContact) {
         setSellerUserName(SellerUserName);
-       // setItemId(ItemId);
+        // setItemId(ItemId);
         setItemTitle(ItemTitle);
         setItemPrice(ItemPrice);
         setItemCondition(ItemCond);
@@ -72,9 +73,7 @@ public class ItemContent implements Serializable {
      *
      * @param ItemId is the given item ID.
      */
-    public void setItemId(String ItemId) {
-        if(ItemId == null)
-            throw new IllegalArgumentException("Item Id must be supplies");
+    public void setItemId(int ItemId) {
         mItem_id = ItemId;
     }
 
@@ -188,7 +187,7 @@ public class ItemContent implements Serializable {
      *
      * @return is the given ID.
      */
-    public String getItemID() {
+    public int getItemID() {
         return mItem_id;
 
     }
@@ -272,7 +271,7 @@ public class ItemContent implements Serializable {
      *
      * @return is a String representing the reason.
      */
-    public static String parseBookJSON(String bookJSON, List<ItemContent> bookList) {
+    public static String parseItemContentJSON(String bookJSON, List<ItemContent> bookList) {
         String reason = null;
         if (bookJSON != null) {
             try {
@@ -282,7 +281,7 @@ public class ItemContent implements Serializable {
                     JSONObject obj = arr.getJSONObject(i);
 
                     ItemContent book = new ItemContent(obj.getString(ItemContent.seller_userName),
-                          obj.getString(ItemContent.Item_title), obj.getString(ItemContent.Item_price),
+                            obj.getString(ItemContent.Item_title), obj.getString(ItemContent.Item_price),
                             obj.getString(ItemContent.Item_Condition), obj.getString(ItemContent.Item_description),
                             obj.getString(ItemContent.seller_location), obj.getString(ItemContent.seller_contact));
 

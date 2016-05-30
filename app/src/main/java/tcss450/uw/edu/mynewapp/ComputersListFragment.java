@@ -46,6 +46,7 @@ public class ComputersListFragment extends Fragment {
     private static final String COMPUTER_URL
             = "http://cssgate.insttech.washington.edu/~sdendaa/husky.php?cmd=computers";
 
+    private SQLite mSQLite;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -100,6 +101,9 @@ public class ComputersListFragment extends Fragment {
             }
         }
 
+        DownloadBookTask task1 = new DownloadBookTask();
+        task1.execute(new String[]{COMPUTER_URL});
+
         ConnectivityManager connMgr = (ConnectivityManager)
                 getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -110,9 +114,16 @@ public class ComputersListFragment extends Fragment {
 
         }
         else {
-            Toast.makeText(view.getContext(),
-                    "No network connection available. Cannot display courses",
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(view.getContext(),
+//                    "No network connection available. Cannot display courses",
+//                    Toast.LENGTH_SHORT).show();
+            if (mSQLite == null) {
+                mSQLite = new SQLite(view.getContext(), "Computer");
+            }
+            if (mComputerList == null) {;
+                mComputerList = mSQLite.getItems();
+            }
+            mRecyclerView.setAdapter(new MyComputersRecyclerViewAdapter(mComputerList, mListener));
         }
 
         return view;
@@ -181,21 +192,47 @@ public class ComputersListFragment extends Fragment {
         protected void onPostExecute(String result) {
             // Something wrong with the network or the URL.
             if (result.startsWith("Unable to")) {
-                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
-                        .show();
+//                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
+//                        .show();
                 return;
             }
 
             mComputerList = new ArrayList<ItemContent>();
-            result = ItemContent.parseBookJSON(result, mComputerList);
+            result = ItemContent.parseItemContentJSON(result, mComputerList);
             // Something wrong with the JSON returned.
             if (result != null) {
-                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
-                        .show();
+//                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
+//                        .show();
                 return;
             }
 
-            // Everything is good, show the list of courses.
+            if (!mComputerList.isEmpty()) {
+                mRecyclerView.setAdapter(new MyComputersRecyclerViewAdapter(mComputerList, mListener));
+
+                if (mSQLite == null) {
+                    mSQLite = new SQLite(getActivity(), "Computer");
+                }
+
+                // Delete old data so that you can refresh the local
+                // database with the network data.
+                mSQLite.deleteItems();
+//                Toast.makeText(getActivity().getApplicationContext(), mBookList.size(), Toast.LENGTH_LONG);
+                // Also, add to the local database
+                System.out.println(mComputerList.size());
+                for (int i=0; i<mComputerList.size(); i++) {
+                    ItemContent item = mComputerList.get(i);
+                    System.out.println(item.getSellerUserName());
+                    mSQLite.insertItem(item.getSellerUserName(),
+                            item.getItemTitle(),
+                            item.getItemPrice(),
+                            item.getmItemCondtion(),
+                            item.getItemDescription(),
+                            item.getSellerLocation(),
+                            item.getSellerContact());
+                }
+
+            }
+
             if (!mComputerList.isEmpty()) {
                 mRecyclerView.setAdapter(new MyComputersRecyclerViewAdapter(mComputerList, mListener));
             }
@@ -226,8 +263,8 @@ public class ComputersListFragment extends Fragment {
                     }
 
                 } catch (Exception e) {
-                    response = "Unable to download the list of courses, Reason: "
-                            + e.getMessage();
+//                    response = "Unable to download the list of courses, Reason: "
+//                            + e.getMessage();
                 }
                 finally {
                     if (urlConnection != null)

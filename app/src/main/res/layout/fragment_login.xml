@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_id"
-        android:hint="Enter user id"
+        android:hint="Enter your userid"
         android:inputType="text"
         android:layout_gravity="center"/>
 
@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/password"
-        android:hint="Enter password"
+        android:hint="Enter your password"
         android:inputType="textPassword"
         android:layout_gravity="center" />
 
@@ -26,6 +26,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/login_button"
         android:layout_gravity="right"
-        android:hint="Sign In"/>
+        android:hint="SIGN IN"/>
 
 </LinearLayout>

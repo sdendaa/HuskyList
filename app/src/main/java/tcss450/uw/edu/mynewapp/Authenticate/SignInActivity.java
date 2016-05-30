@@ -101,9 +101,16 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
                             .show();
                     Intent i = new Intent(this, CategoryActivity.class);
                     startActivity(i);
+
+                    SharedPreferences.Editor editor = mSharedPreferences.edit();
+                    editor.putString("ID",userId);
+                    editor.apply();
+                    return;
                 }
                 // On last pair and passwords do not match.
-                if ((!iterator.hasNext()) && ((!userId.equals(key) && !pwd.equals(value)))) {
+                else if ((!iterator.hasNext()) && ((!userId.equals(key) && !pwd.equals(value)))) {
+                    System.out.println("userId: " + userId + " key: " + key);
+                    System.out.println("pwd: " + pwd + " value: " + value);
                     Toast.makeText(getApplicationContext(), "Invalid email or password!"
                             , Toast.LENGTH_LONG)
                             .show();
@@ -129,9 +136,8 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
         @Override
         protected void onPostExecute(String result) {
 
-            mMap = new HashMap<String,String>();
             System.out.print("Map created\n\n\n");
-
+            mMap = new HashMap<String,String>();
             String answer = parseJSON(result, mMap);
 
         }

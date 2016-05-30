@@ -4,6 +4,7 @@
 */
 package tcss450.uw.edu.mynewapp.Authenticate;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -98,6 +99,10 @@ public class RegisterFragment extends Fragment {
 
                 String url = buildUserURL(v);
                 mListener.addUser(url);
+                SharedPreferences mSharedPreferences = getActivity().getSharedPreferences("tcss450.uw.edu.mynewapp.PREFS", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = mSharedPreferences.edit();
+                editor.putString("ID",mEmail.getText().toString());
+                editor.apply();
             }
         });
         return v;

@@ -47,7 +47,9 @@ public class BookListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     /** This constant represents the book URL. */
     private static final String BOOK_URL
-       = "http://cssgate.insttech.washington.edu/~sdendaa/husky.php?cmd=books";
+            = "http://cssgate.insttech.washington.edu/~sdendaa/husky.php?cmd=books";
+
+    private SQLite mSQLite;
 
     /**
      * This is the BookListFragment constructor.
@@ -113,6 +115,9 @@ public class BookListFragment extends Fragment {
             // mRecyclerView.setAdapter(new MyBookRecyclerViewAdapter(mBookList, mListener));
         }
 
+        DownloadBookTask task1 = new DownloadBookTask();
+        task1.execute(new String[]{BOOK_URL});
+
         ConnectivityManager connMgr = (ConnectivityManager)
                 getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -123,9 +128,17 @@ public class BookListFragment extends Fragment {
 
         }
         else {
-            Toast.makeText(view.getContext(),
-                    "No network connection available. Cannot display courses",
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(view.getContext(),
+//                    "No network connection available. Cannot display courses",
+//                    Toast.LENGTH_SHORT).show();
+            if (mSQLite == null) {
+                mSQLite = new SQLite(view.getContext(), "Book");
+            }
+            if (mBookList == null) {;
+                mBookList = mSQLite.getItems();
+                System.out.println(mBookList.size());
+            }
+            mRecyclerView.setAdapter(new MyBookRecyclerViewAdapter(mBookList, mListener));
         }
 
         return view;
@@ -194,19 +207,48 @@ public class BookListFragment extends Fragment {
         protected void onPostExecute(String result) {
             // Something wrong with the network or the URL.
             if (result.startsWith("Unable to")) {
-                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
-                        .show();
+//                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
+//                        .show();
                 return;
             }
 
             mBookList = new ArrayList<ItemContent>();
-            result = ItemContent.parseBookJSON(result, mBookList);
+            result = ItemContent.parseItemContentJSON(result, mBookList);
             // Something wrong with the JSON returned.
             if (result != null) {
-                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
-                        .show();
+//                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
+//                        .show();
                 return;
             }
+
+            if (!mBookList.isEmpty()) {
+                mRecyclerView.setAdapter(new MyBookRecyclerViewAdapter(mBookList, mListener));
+
+                if (mSQLite == null) {
+                    mSQLite = new SQLite(getActivity(), "Book");
+                }
+
+                // Delete old data so that you can refresh the local
+                // database with the network data.
+                mSQLite.deleteItems();
+//                Toast.makeText(getActivity().getApplicationContext(), mBookList.size(), Toast.LENGTH_LONG);
+                // Also, add to the local database
+                System.out.println(mBookList.size());
+                for (int i=0; i<mBookList.size(); i++) {
+                    ItemContent item = mBookList.get(i);
+                    System.out.println(item.getSellerUserName());
+                    mSQLite.insertItem(item.getSellerUserName(),
+                            item.getItemTitle(),
+                            item.getItemPrice(),
+                            item.getmItemCondtion(),
+                            item.getItemDescription(),
+                            item.getSellerLocation(),
+                            item.getSellerContact());
+                }
+
+            }
+
+
 
             // Everything is good, show the list of courses.
             if (!mBookList.isEmpty()) {
@@ -239,8 +281,8 @@ public class BookListFragment extends Fragment {
                     }
 
                 } catch (Exception e) {
-                    response = "Unable to download the list of courses, Reason: "
-                            + e.getMessage();
+//                    response = "Unable to download the list of courses, Reason: "
+//                            + e.getMessage();
                 }
                 finally {
                     if (urlConnection != null)

@@ -3,8 +3,10 @@
 * Authors: Vladimir Smirnov and Shelema Bekele
 */
 package tcss450.uw.edu.mynewapp;
+import android.content.Context;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,7 +30,7 @@ public class ItemDetailFragment extends Fragment {
     /** This variable is a TextView that holds the item ID. */
     private TextView mSellerUserNameTextView;
     /** This variable is a TextView that holds the item title. */
-    private TextView mItemTitleTextView;
+    public TextView mItemTitleTextView;
     /** This variable is a TextView that holds the item price. */
     private TextView mItemPriceTextView;
     /** This variable is a TextView that holds the item condition. */
@@ -45,7 +47,7 @@ public class ItemDetailFragment extends Fragment {
     private String mTitle;
     /** This constant is a String that represents the item selected. */
     public static String ADS_ITEM_SELECTED = "adsItemSelected";
-
+    public String title;
     /**
      * This is the ItemDetailFragment constructor.
      */
@@ -68,13 +70,14 @@ public class ItemDetailFragment extends Fragment {
         getActivity().setTitle(mTitle);
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_item_detail, container, false);
-        mSellerUserNameTextView = (TextView) view.findViewById(R.id.add_Seller_userName);
+        //mSellerUserNameTextView = (TextView) view.findViewById(R.id.add_Seller_userName);
         mItemTitleTextView = (TextView) view.findViewById(R.id.item_title);
         mItemPriceTextView = (TextView) view.findViewById(R.id.item_price);
         mItemConditionTextView = (TextView) view.findViewById(R.id.item_condition);
         mItemDescriptionTextView = (TextView) view.findViewById(R.id.item_Description);
         mItemSellerLocationTextView = (TextView) view.findViewById(R.id.item_seller_location);
         mItemSellerContactTextView = (TextView) view.findViewById(R.id.item_seller_contact);
+
 
         Button contact_seller = (Button) view.findViewById(R.id.contact_seller_button);
         contact_seller.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +99,7 @@ public class ItemDetailFragment extends Fragment {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(getActivity(), AddItemActivity.class);
+                Intent intent = new Intent(getActivity(), UpdateAddsActivity.class);
                 startActivity(intent);
             }
         });
@@ -112,6 +115,7 @@ public class ItemDetailFragment extends Fragment {
         if (content != null) {
            // mSellerUserNameTextView.setText("Seller USerName: "+content.getSellerUserName());
             mItemTitleTextView.setText("Item Tilte: "+content.getItemTitle());
+            title = content.getItemTitle();
             mItemPriceTextView.setText(("Item Price: "+content.getItemPrice()));
             mItemConditionTextView.setText("Item condition: "+content.getmItemCondtion());
             mItemDescriptionTextView.setText("Item Description: "+content.getItemDescription());

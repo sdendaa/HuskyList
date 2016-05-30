@@ -186,7 +186,7 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
         if (id == R.id.action_logout && sharedPreferences.getBoolean("loggedin", false)) {
             sharedPreferences.edit().putBoolean("loggedin", false)
                     .apply();
-
+            sharedPreferences.edit().remove("ID").commit();
             Intent i = new Intent(this, SignInActivity.class);
             startActivity(i);
             return true;

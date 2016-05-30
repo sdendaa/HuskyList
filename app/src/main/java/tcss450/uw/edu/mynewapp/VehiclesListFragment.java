@@ -45,6 +45,8 @@ public class VehiclesListFragment extends Fragment {
     private static final String VEHICLES_URL
             = "http://cssgate.insttech.washington.edu/~sdendaa/husky.php?cmd=vehicles";
 
+    private SQLite mSQLite;
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -86,7 +88,7 @@ public class VehiclesListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_vehicles_list, container, false);
 
-        getActivity().setTitle("Lists of Computers");
+        getActivity().setTitle("Lists of Vehicles");
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -99,6 +101,9 @@ public class VehiclesListFragment extends Fragment {
             }
         }
 
+        DownloadBookTask task1 = new DownloadBookTask();
+        task1.execute(new String[]{VEHICLES_URL});
+
         ConnectivityManager connMgr = (ConnectivityManager)
                 getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -109,9 +114,16 @@ public class VehiclesListFragment extends Fragment {
 
         }
         else {
-            Toast.makeText(view.getContext(),
-                    "No network connection available. Cannot display courses",
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(view.getContext(),
+//                    "No network connection available. Cannot display courses",
+//                    Toast.LENGTH_SHORT).show();
+            if (mSQLite == null) {
+                mSQLite = new SQLite(view.getContext(), "Vehicle");
+            }
+            if (mVehiclesList == null) {;
+                mVehiclesList = mSQLite.getItems();
+            }
+            mRecyclerView.setAdapter(new MyVehiclesRecyclerViewAdapter(mVehiclesList, mListener));
         }
 
         return view;
@@ -180,17 +192,17 @@ public class VehiclesListFragment extends Fragment {
         protected void onPostExecute(String result) {
             // Something wrong with the network or the URL.
             if (result.startsWith("Unable to")) {
-                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
-                        .show();
+//                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
+//                        .show();
                 return;
             }
 
             mVehiclesList = new ArrayList<ItemContent>();
-            result = ItemContent.parseBookJSON(result, mVehiclesList);
+            result = ItemContent.parseItemContentJSON(result, mVehiclesList);
             // Something wrong with the JSON returned.
             if (result != null) {
-                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
-                        .show();
+//                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
+//                        .show();
                 return;
             }
 
@@ -198,6 +210,38 @@ public class VehiclesListFragment extends Fragment {
             if (!mVehiclesList.isEmpty()) {
                 mRecyclerView.setAdapter(new MyVehiclesRecyclerViewAdapter(mVehiclesList, mListener));
             }
+
+            if (!mVehiclesList.isEmpty()) {
+                mRecyclerView.setAdapter(new MyVehiclesRecyclerViewAdapter(mVehiclesList, mListener));
+
+                if (mSQLite == null) {
+                    mSQLite = new SQLite(getActivity(), "Vehicle");
+                }
+
+                // Delete old data so that you can refresh the local
+                // database with the network data.
+                mSQLite.deleteItems();
+//                Toast.makeText(getActivity().getApplicationContext(), mBookList.size(), Toast.LENGTH_LONG);
+                // Also, add to the local database
+                System.out.println(mVehiclesList.size());
+                for (int i=0; i<mVehiclesList.size(); i++) {
+                    ItemContent item = mVehiclesList.get(i);
+                    System.out.println(item.getSellerUserName());
+                    mSQLite.insertItem(item.getSellerUserName(),
+                            item.getItemTitle(),
+                            item.getItemPrice(),
+                            item.getmItemCondtion(),
+                            item.getItemDescription(),
+                            item.getSellerLocation(),
+                            item.getSellerContact());
+                }
+
+            }
+
+            if (!mVehiclesList.isEmpty()) {
+                mRecyclerView.setAdapter(new MyVehiclesRecyclerViewAdapter(mVehiclesList, mListener));
+            }
+
 
         }
 
@@ -225,8 +269,8 @@ public class VehiclesListFragment extends Fragment {
                     }
 
                 } catch (Exception e) {
-                    response = "Unable to download the list of courses, Reason: "
-                            + e.getMessage();
+//                    response = "Unable to download the list of courses, Reason: "
+//                            + e.getMessage();
                 }
                 finally {
                     if (urlConnection != null)

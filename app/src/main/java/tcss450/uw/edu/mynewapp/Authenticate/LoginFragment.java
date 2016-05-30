@@ -48,6 +48,7 @@ public class LoginFragment extends Fragment {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String userId = userIdText.getText().toString();
                 String pwd = pwdText.getText().toString();
                 if (TextUtils.isEmpty(userId))  {
