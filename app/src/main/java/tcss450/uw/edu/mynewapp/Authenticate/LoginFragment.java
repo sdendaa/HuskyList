@@ -41,6 +41,7 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setTitle("Login Activity");
         View v =  inflater.inflate(R.layout.fragment_login, container, false);
         final EditText userIdText = (EditText) v.findViewById(R.id.user_id);
         final EditText pwdText = (EditText) v.findViewById(R.id.password);

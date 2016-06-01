@@ -227,7 +227,8 @@ public class VehiclesListFragment extends Fragment {
                 for (int i=0; i<mVehiclesList.size(); i++) {
                     ItemContent item = mVehiclesList.get(i);
                     System.out.println(item.getSellerUserName());
-                    mSQLite.insertItem(item.getSellerUserName(),
+                    mSQLite.insertItem(item.getItemID(),
+                            item.getSellerUserName(),
                             item.getItemTitle(),
                             item.getItemPrice(),
                             item.getmItemCondtion(),

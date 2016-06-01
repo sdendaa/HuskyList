@@ -16,7 +16,7 @@ import tcss450.uw.edu.mynewapp.model.ItemContent;
  */
 public class SQLite {
 
-    public static final int DB_VERSION = 2;
+    public static final int DB_VERSION = 4;
     public static String DB_NAME;
     public static String mName;
     public static int ID_count;
@@ -69,7 +69,7 @@ public class SQLite {
     public List<ItemContent> getItems() {
 
         String[] columns = {
-                "ID", "SellerUserName", "ItemTitle", "ItemPrice", "ItemCond", "ItemDesc", "SellerLocation", "SellerContact"
+                "ItemID", "SellerUserName", "ItemTitle", "ItemPrice", "ItemCond", "ItemDesc", "SellerLocation", "SellerContact"
         };
 
         Cursor c = mSQLiteDatabase.query(
@@ -84,7 +84,7 @@ public class SQLite {
         c.moveToFirst();
         List<ItemContent> list = new ArrayList<ItemContent>();
         for (int i=0; i<c.getCount(); i++) {
-            int ID = c.getInt(0);
+            int ItemID = c.getInt(0);
             String SellerUserName = c.getString(1);
             String ItemTitle = c.getString(2);
             String ItemPrice = c.getString(3);
@@ -93,21 +93,21 @@ public class SQLite {
             String SellerLocation = c.getString(6);
             String SellerContact = c.getString(7);
             ItemContent item = new ItemContent(SellerUserName, ItemTitle, ItemPrice, ItemCond, ItemDesc, SellerLocation, SellerContact);
-            item.setItemId(ID);
+            item.setItemId(ItemID);
             list.add(item);
             c.moveToNext();
         }
 
-    //    System.out.println(mName + " " + c.getCount());
+        //    System.out.println(mName + " " + c.getCount());
 
         return list;
     }
 
 
 
-    public boolean insertItem(String SellerUserName, String ItemTitle, String ItemPrice, String ItemCond, String ItemDesc, String SellerLocation, String SellerContact) {
+    public boolean insertItem(int ItemID, String SellerUserName, String ItemTitle, String ItemPrice, String ItemCond, String ItemDesc, String SellerLocation, String SellerContact) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put("ID", ID_count++);
+        contentValues.put("ItemID", ItemID);
         contentValues.put("SellerUserName", SellerUserName);
         contentValues.put("ItemTitle", ItemTitle);
         contentValues.put("ItemPrice", ItemPrice);
@@ -115,8 +115,6 @@ public class SQLite {
         contentValues.put("ItemDesc", ItemDesc);
         contentValues.put("SellerLocation", SellerLocation);
         contentValues.put("SellerContact", SellerContact);
-
-        System.out.println(ItemTitle);
 
         long rowId = mSQLiteDatabase.insert(DB_TABLE, null, contentValues);
         return rowId != -1;
@@ -135,7 +133,7 @@ public class SQLite {
         public ItemDBHelper(Context context, String DBname, SQLiteDatabase.CursorFactory factory, int version, String name) {
             super(context, DBname, factory, version);
             CREATE_ITEM_SQL = "CREATE TABLE IF NOT EXISTS " + name
-                    + " (ID INTEGER PRIMARY KEY, SellerUserName TEXT, ItemTitle TEXT, ItemPrice TEXT, ItemCond TEXT, ItemDesc TEXT, SellerLocation TEXT, SellerContact TEXT)";
+                    + " (ItemID INTEGER PRIMARY KEY, SellerUserName TEXT, ItemTitle TEXT, ItemPrice TEXT, ItemCond TEXT, ItemDesc TEXT, SellerLocation TEXT, SellerContact TEXT)";
             DROP_ITEM_SQL = "DROP TABLE IF EXISTS " + name;
         }
 

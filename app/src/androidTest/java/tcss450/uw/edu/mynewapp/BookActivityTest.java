@@ -46,13 +46,13 @@ public class BookActivityTest extends
 //    }
 
     public void testAddWorks() {
-        solo.clickOnView(solo.getView(R.id.create_newAds_button));
+        solo.clickOnView(solo.getView(R.id.action_create));
         boolean textFound = solo.searchText("Create New Ads");
         assertTrue("Add a Book fragment loaded", textFound);
     }
 
     public void testBookAddButton() {
-        solo.clickOnView(solo.getView(R.id.create_newAds_button));
+        solo.clickOnView(solo.getView(R.id.action_create));
         solo.enterText(0, "I am a book title");
         solo.enterText(1, "98.98");
         solo.enterText(2, "used");

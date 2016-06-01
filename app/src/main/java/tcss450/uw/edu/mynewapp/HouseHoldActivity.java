@@ -22,15 +22,6 @@ public class HouseHoldActivity extends AppCompatActivity implements HouseHoldLis
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_houseHold_container, houseHoldListFragment)
                 .commit();
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
     /**
      * This method is used to communiate with the itemDetailFragment.
@@ -41,6 +32,8 @@ public class HouseHoldActivity extends AppCompatActivity implements HouseHoldLis
         ItemDetailFragment itemDetailFragment = new ItemDetailFragment();
         Bundle args = new Bundle();
         args.putSerializable(ItemDetailFragment.ADS_ITEM_SELECTED, item);
+        args.putInt("ID", item.getItemID());
+        args.putString("Category", item.getItemCategory());
         itemDetailFragment.setArguments(args);
 
         getSupportFragmentManager().beginTransaction()

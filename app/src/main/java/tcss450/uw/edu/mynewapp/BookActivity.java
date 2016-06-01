@@ -39,7 +39,7 @@ public class BookActivity extends AppCompatActivity implements BookListFragment.
     }
 
     /**
-     * This method is used to communiate with the itemDetailFragment.
+     * This method is used to communiate with the itemdDetailFragment.
      *
      * @param item is the given item.
      */
@@ -47,6 +47,9 @@ public class BookActivity extends AppCompatActivity implements BookListFragment.
         ItemDetailFragment itemDetailFragment = new ItemDetailFragment();
         Bundle args = new Bundle();
         args.putSerializable(ItemDetailFragment.ADS_ITEM_SELECTED, item);
+        args.putInt("ID", item.getItemID());
+        args.putString("Category", item.getItemCategory());
+        args.putString("Prefx", "Book");
         itemDetailFragment.setArguments(args);
 
         getSupportFragmentManager().beginTransaction()

@@ -42,34 +42,34 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         initControl();
-
-        Button addButton = (Button) findViewById(R.id.create_newAds_button);
-        if(addButton != null)
-            addButton.setOnClickListener(new View.OnClickListener() {
-                /**
-                 * This method is called when the button is clicked.
-                 *
-                 * @param view is the given view.
-                 */
-                @Override
-                public void onClick(View view) {
-                    SharedPreferences sharedPreferences =
-                            getSharedPreferences("tcss450.uw.edu.mynewapp.PREFS", Context.MODE_PRIVATE);
-
-                    if (sharedPreferences.getBoolean("loggedin", false)) {
-                        Intent i = new Intent(CategoryActivity.this, AddItemActivity.class);
-                        startActivity(i);
-                    } else {
-                        Context context = getApplicationContext();
-                        CharSequence text = "You must login first!";
-                        int duration = Toast.LENGTH_SHORT;
-
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-                    }
-
-                }
-            });
+        setTitle("");
+//        Button addButton = (Button) findViewById(R.id.create_newAds_button);
+//        if(addButton != null)
+//            addButton.setOnClickListener(new View.OnClickListener() {
+//                /**
+//                 * This method is called when the button is clicked.
+//                 *
+//                 * @param view is the given view.
+//                 */
+//                @Override
+//                public void onClick(View view) {
+//                    SharedPreferences sharedPreferences =
+//                            getSharedPreferences("tcss450.uw.edu.mynewapp.PREFS", Context.MODE_PRIVATE);
+//
+//                    if (sharedPreferences.getBoolean("loggedin", false)) {
+//                        Intent i = new Intent(CategoryActivity.this, AddItemActivity.class);
+//                        startActivity(i);
+//                    } else {
+//                        Context context = getApplicationContext();
+//                        CharSequence text = "You must login first!";
+//                        int duration = Toast.LENGTH_SHORT;
+//
+//                        Toast toast = Toast.makeText(context, text, duration);
+//                        toast.show();
+//                    }
+//
+//                }
+//            });
     }
 
 
@@ -95,8 +95,8 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
         cellPhone.setOnClickListener(this);
         videoGame.setOnClickListener(this);
         houseHold.setOnClickListener(this);
-        register.setOnClickListener(this);
-        login.setOnClickListener(this);
+        //  register.setOnClickListener(this);
+        //    login.setOnClickListener(this);
 
     }
 
@@ -129,23 +129,23 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
                 Intent hous = new Intent(this, HouseHoldActivity.class);
                 startActivity(hous);
                 break;
-            case R.id.login_button:
-                if (!sharedPreferences.getBoolean("loggedin", false)) {
-                    Intent log = new Intent(this, SignInActivity.class);
-                    startActivity(log);
-                } else {
-                    Context context = getApplicationContext();
-                    CharSequence text = "Already logged in!";
-                    int duration = Toast.LENGTH_SHORT;
-
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                }
-                break;
-            case R.id.register_button:
-                Intent reg = new Intent(this, RegisterActivity.class);
-                startActivity(reg);
-                break;
+//            case R.id.login_button:
+//                if (!sharedPreferences.getBoolean("loggedin", false)) {
+//                    Intent log = new Intent(this, SignInActivity.class);
+//                    startActivity(log);
+//                } else {
+//                    Context context = getApplicationContext();
+//                    CharSequence text = "Already logged in!";
+//                    int duration = Toast.LENGTH_SHORT;
+//
+//                    Toast toast = Toast.makeText(context, text, duration);
+//                    toast.show();
+//                }
+//                break;
+//            case R.id.register_button:
+//                Intent reg = new Intent(this, RegisterActivity.class);
+//                startActivity(reg);
+//                break;
 //            case R.id.add_ads_button:
 //                Intent add = new Intent(this, AddItemActivity.class);
 //                startActivity(add);
@@ -189,7 +189,7 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
             sharedPreferences.edit().remove("ID").commit();
             Intent i = new Intent(this, SignInActivity.class);
             startActivity(i);
-            return true;
+
         }else if(id == R.id.action_logout && !sharedPreferences.getBoolean("loggedin", false)){
 
             Context context = getApplicationContext();
@@ -198,7 +198,36 @@ public class CategoryActivity extends AppCompatActivity implements BookListFragm
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+        }else if(id == R.id.action_login){
+            if (!sharedPreferences.getBoolean("loggedin", false)) {
+                Intent log = new Intent(this, SignInActivity.class);
+                startActivity(log);
+            } else {
+                Context context = getApplicationContext();
+                CharSequence text = "Already logged in!";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
+        }else if(id == R.id.action_register){
+            Intent reg = new Intent(this, RegisterActivity.class);
+            startActivity(reg);
+
+        } else if(id == R.id.action_create){
+            if (sharedPreferences.getBoolean("loggedin", false)) {
+                Intent i = new Intent(CategoryActivity.this, AddItemActivity.class);
+                startActivity(i);
+            } else {
+                Context context = getApplicationContext();
+                CharSequence text = "You must login first!";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
         }
+
 
         return super.onOptionsItemSelected(item);
     }

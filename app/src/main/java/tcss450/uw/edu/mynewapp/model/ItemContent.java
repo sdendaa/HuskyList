@@ -37,9 +37,11 @@ public class ItemContent implements Serializable {
 
     private String mSeller_userName;
 
+    private String mItem_Category;
+
     /** This variable holds the database variable names. */
     public static final String seller_userName= "Seller_userName", Item_id = "Item_id",
-            Item_title = "Item_title", Item_price = "Item_price",
+            Item_title = "Item_title", Item_price = "Item_price", Item_category = "Item_category",
             Item_Condition = "Item_condition", Item_description = "Item_descriptions",
             seller_location = "Seller_location", seller_contact = "Seller_contact";
 
@@ -58,7 +60,7 @@ public class ItemContent implements Serializable {
     public ItemContent(String SellerUserName, String ItemTitle, String ItemPrice, String ItemCond,
                        String ItemDesc, String SellerLocation, String SellerContact) {
         setSellerUserName(SellerUserName);
-        // setItemId(ItemId);
+     //   setItemId(ItemId);
         setItemTitle(ItemTitle);
         setItemPrice(ItemPrice);
         setItemCondition(ItemCond);
@@ -75,6 +77,10 @@ public class ItemContent implements Serializable {
      */
     public void setItemId(int ItemId) {
         mItem_id = ItemId;
+    }
+
+    public void setItemCategory(String ItemCategory) {
+        mItem_Category = ItemCategory;
     }
 
     /**
@@ -244,6 +250,10 @@ public class ItemContent implements Serializable {
         return mSeller_userName;
     }
 
+    public String getItemCategory() {
+        return mItem_Category;
+    }
+
 
     /**
      * This method is used to represent the item in a String.
@@ -274,18 +284,29 @@ public class ItemContent implements Serializable {
     public static String parseItemContentJSON(String bookJSON, List<ItemContent> bookList) {
         String reason = null;
         if (bookJSON != null) {
+
             try {
                 JSONArray arr = new JSONArray(bookJSON);
-
+                System.out.println(arr.length());
                 for (int i = 0; i < arr.length(); i++) {
+
                     JSONObject obj = arr.getJSONObject(i);
+
+                    int ID = obj.getInt(ItemContent.Item_id);
+
+                    String category = obj.getString(ItemContent.Item_category);
+
+                  //  int theID = Integer.parseInt(ID);
 
                     ItemContent book = new ItemContent(obj.getString(ItemContent.seller_userName),
                             obj.getString(ItemContent.Item_title), obj.getString(ItemContent.Item_price),
                             obj.getString(ItemContent.Item_Condition), obj.getString(ItemContent.Item_description),
                             obj.getString(ItemContent.seller_location), obj.getString(ItemContent.seller_contact));
+                    book.setItemId(ID);
+                    book.setItemCategory(category);
 
                     bookList.add(book);
+
                 }
 
             } catch (JSONException e) {

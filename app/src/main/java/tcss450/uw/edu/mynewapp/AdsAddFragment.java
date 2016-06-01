@@ -32,7 +32,7 @@ import java.net.URLEncoder;
  */
 public class AdsAddFragment extends Fragment {
     /** This variable holds the book add listener. */
-    private BookAddListener mListener;
+    private ItemAddListener mListener;
     /** This variable holds the EditText for the item ID. */
     private EditText mSellerUserName;
 //    /** This variable holds the EditText for the item ID. */
@@ -65,8 +65,11 @@ public class AdsAddFragment extends Fragment {
     private final static String VIDEOGAME_URL
             = "http://cssgate.insttech.washington.edu/~sdendaa/AddVideoGame.php?";
 
+    private String mCategory;
+
     public AdsAddFragment() {
         // Required empty public constructor
+        mCategory = "books";
     }
 
 
@@ -100,18 +103,23 @@ public class AdsAddFragment extends Fragment {
                 switch (items[theID]) {
                     case "Household Items":
                         CURRENT_URL = HOUSEHOLD_URL;
+                        mCategory = "houseHoldItems";
                         break;
                     case "Cellphones":
                         CURRENT_URL = CELLPHONE_URL;
+                        mCategory = "cellPhones";
                         break;
                     case "Vehicles":
                         CURRENT_URL = VEHICLE_URL;
+                        mCategory =  "vehicles";
                         break;
                     case "Video Gaming":
                         CURRENT_URL = VIDEOGAME_URL;
+                        mCategory = "videoGames";
                         break;
                     case "Computers":
                         CURRENT_URL = COMPUTER_URL;
+                        mCategory = "computers";
                         break;
                 }
             }
@@ -127,7 +135,8 @@ public class AdsAddFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String url = buildCourseURL(v);
-                mListener.addBook(url);
+                mListener.addItems(url);
+
             }
         });
 
@@ -146,15 +155,15 @@ public class AdsAddFragment extends Fragment {
         return v;
     }
 
-    public interface BookAddListener {
-        void addBook(String url);
+    public interface ItemAddListener {
+        void addItems(String url);
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof BookAddListener) {
-            mListener = (BookAddListener) context;
+        if (context instanceof ItemAddListener) {
+            mListener = (ItemAddListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement AdsAddListener");
@@ -164,7 +173,16 @@ public class AdsAddFragment extends Fragment {
         StringBuilder sb = new StringBuilder(CURRENT_URL);
         try {
             SharedPreferences mSharedPreferences = getActivity().getSharedPreferences("tcss450.uw.edu.mynewapp.PREFS", Context.MODE_PRIVATE);
-            final String ID = mSharedPreferences.getString("ID", "");
+
+//            String result = mItemPriceEditText.getText().toString() + mItemConditionEditText.getText().toString() +
+//                    mItemDescriptionEditText.getText().toString() + mItemSellerLocationEditText.getText().toString() + mItemSellerContactEditText.getText().toString();
+//            StringBuilder StringBuilder = new StringBuilder();
+//            StringBuilder.append("" + Math.abs(result.hashCode() % 1000000));
+//            String ItemID = StringBuilder.toString();
+//            sb.append("Item_id=");
+//            sb.append(ItemID);
+
+            String ID = mSharedPreferences.getString("ID", "");
             String SellerUsername = ID;
             sb.append("Seller_userName=");
             sb.append(SellerUsername);
@@ -192,6 +210,13 @@ public class AdsAddFragment extends Fragment {
             String SellerContact = mItemSellerContactEditText.getText().toString();
             sb.append("&Seller_contact=");
             sb.append(URLEncoder.encode(SellerContact, "UTF-8"));
+
+            String Category = mCategory;
+            sb.append("&Item_category=");
+            sb.append(URLEncoder.encode(Category, "UTF-8"));
+
+
+
 
             Log.i("AdsAddFragment", sb.toString());
         }

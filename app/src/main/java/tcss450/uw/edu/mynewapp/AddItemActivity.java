@@ -5,11 +5,8 @@
 package tcss450.uw.edu.mynewapp;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -28,7 +25,7 @@ import java.net.URL;
  * @author Vladimir Smirnov
  * @version 1.0
  */
-public class AddItemActivity extends AppCompatActivity implements AdsAddFragment.BookAddListener{
+public class AddItemActivity extends AppCompatActivity implements AdsAddFragment.ItemAddListener{
 
     /**
      * This method is called when the activity is created.
@@ -114,7 +111,7 @@ public class AddItemActivity extends AppCompatActivity implements AdsAddFragment
                 JSONObject jsonObject = new JSONObject(result);
                 String status = (String) jsonObject.get("result");
                 if (status.equals("success")) {
-                    Toast.makeText(getApplicationContext(), "Course successfully added!"
+                    Toast.makeText(getApplicationContext(), "Item successfully added!"
                             , Toast.LENGTH_LONG)
                             .show();
                 } else {
@@ -135,10 +132,11 @@ public class AddItemActivity extends AppCompatActivity implements AdsAddFragment
      *
      * @param url is the given URL.
      */
-    public void addBook(String url){
+    public void addItems(String url){
         AddBookTask task = new AddBookTask();
         task.execute(new String[]{url.toString()});
         // Takes you back to the previous fragment by popping the current fragment out.
+        getSupportFragmentManager().popBackStackImmediate();
         getSupportFragmentManager().popBackStackImmediate();
     }
 }

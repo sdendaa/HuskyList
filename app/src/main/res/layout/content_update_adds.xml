@@ -13,42 +13,115 @@
     tools:context=".UpdateAddsActivity"
     tools:showIn="@layout/activity_update_adds">
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter the item title here.."
-        android:id="@+id/update_item_title" />
+        android:orientation="horizontal">
 
-    <EditText
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Item Title: "
+            android:id="@+id/update_item_titleView" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter the item title here.."
+            android:id="@+id/update_item_titleEdit" />
+
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter the item price here.."
-        android:id="@+id/update_item_price" />
+        android:orientation="horizontal">
 
-    <EditText
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Item Price: "
+            android:id="@+id/update_item_priceView" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter the item title here.."
+            android:id="@+id/update_item_priceEdit" />
+
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter the item condition here.."
-        android:id="@+id/update_item_condition" />
+        android:orientation="horizontal">
 
-    <EditText
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Item Condition: "
+            android:id="@+id/update_item_condView" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter the item title here.."
+            android:id="@+id/update_item_condEdit" />
+
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter the item description here.."
-        android:id="@+id/update_item_Description" />
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Item Description: "
+            android:id="@+id/update_item_descView" />
 
-    <EditText
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter the item title here.."
+            android:id="@+id/update_item_descEdit" />
+
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter the item's seller location here.."
-        android:id="@+id/update_item_seller_location" />
+        android:orientation="horizontal">
 
-    <EditText
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seller Location: "
+            android:id="@+id/update_item_sellerLocView" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter the item title here.."
+            android:id="@+id/update_item_sellerLocEdit" />
+
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter the item's seller contact here.."
-        android:id="@+id/update_item_seller_contact" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seller Contact: "
+            android:id="@+id/update_item_sellerContView" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter the item title here.."
+            android:id="@+id/update_item_sellerContEdit" />
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,8 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/save_update_button"
-            android:text="SAVE"
-            android:onClick="SaveUpdate" />
+            android:text="SAVE" />
 
         <Button
             android:layout_width="wrap_content"

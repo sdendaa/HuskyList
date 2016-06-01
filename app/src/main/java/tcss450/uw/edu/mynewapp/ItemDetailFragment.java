@@ -3,19 +3,32 @@
 * Authors: Vladimir Smirnov and Shelema Bekele
 */
 package tcss450.uw.edu.mynewapp;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import tcss450.uw.edu.mynewapp.model.ItemContent;
 /**
@@ -47,13 +60,21 @@ public class ItemDetailFragment extends Fragment {
     private String mTitle;
     /** This constant is a String that represents the item selected. */
     public static String ADS_ITEM_SELECTED = "adsItemSelected";
-    public String title;
+
+    private int mID;
+    private String Prefix;
+
+    private String mCategory;
+
+
     /**
      * This is the ItemDetailFragment constructor.
      */
     public ItemDetailFragment() {
         // Required empty public constructor
+
     }
+
 
     /**
      * This method is called when the fragment is created and is used
@@ -99,11 +120,97 @@ public class ItemDetailFragment extends Fragment {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
+//                mListener.update(mItemTitleTextView.getText().toString(), mItemPriceTextView.getText().toString(), mItemConditionTextView.getText().toString(),
+//                        mItemDescriptionTextView.getText().toString(), mItemSellerLocationTextView.getText().toString(), mItemSellerContactTextView.getText().toString());
                 Intent intent = new Intent(getActivity(), UpdateAddsActivity.class);
+                intent.putExtra("Title", mItemTitleTextView.getText().toString());
+                intent.putExtra("Price", mItemPriceTextView.getText().toString());
+                intent.putExtra("Condition", mItemConditionTextView.getText().toString());
+                intent.putExtra("Description", mItemDescriptionTextView.getText().toString());
+                intent.putExtra("Location", mItemSellerLocationTextView.getText().toString());
+                intent.putExtra("Contact", mItemSellerContactTextView.getText().toString());
+                intent.putExtra("Category", mCategory);
+                intent.putExtra("Email", mEmail);
+                intent.putExtra("ID", mID);
+                intent.putExtra("Prefix", Prefix);
+                startActivity(intent);
+            }
+        });
+
+        Button delete = (Button) view.findViewById(R.id.delete_button);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                DeleteTask task = new DeleteTask();
+                String URL = "http://cssgate.insttech.washington.edu/~sdendaa/deleteHusky.php?cmd=" + mCategory + "&Item_id=" + mID;
+                //     http://cssgate.insttech.washington.edu/~sdendaa/updateHusky.php?cmd=books&Seller_userName=v@gmail.com&Item_title=database&Item_price=kfjdjskfkvmd&Item_condition=kckkdjdjfkv&Item_descriptions=kfjdkfkgkg&Seller_location=fjdjfkfkgkkf&Seller_contact=jfjdjdjfjfjgjjf&Item_category=books&Item_id=8
+                task.execute(URL);
+                Intent intent = new Intent(getActivity(), BookActivity.class);
                 startActivity(intent);
             }
         });
         return view;
+    }
+
+    private class DeleteTask extends AsyncTask<String, Void, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            String response = "";
+            HttpURLConnection urlConnection = null;
+            for (String url : urls) {
+                try {
+                    URL urlObject = new URL(url);
+                    urlConnection = (HttpURLConnection) urlObject.openConnection();
+
+                    InputStream content = urlConnection.getInputStream();
+
+                    BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+                    String s;
+                    while ((s = buffer.readLine()) != null) {
+                        response += s;
+                    }
+
+                } catch (Exception e) {
+                    System.out.println(e);
+
+                } finally {
+                    if (urlConnection != null)
+                        urlConnection.disconnect();
+                }
+            }
+            return response;
+        }
+
+
+        private void deleteReminderProcess(String result){
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                String status = (String) jsonObject.get("result");
+                if (status.equals("success")) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Reminder successfully deleted!"
+                            , Toast.LENGTH_LONG)
+                            .show();
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "Failed to delete: "
+                                    + jsonObject.get("error")
+                            , Toast.LENGTH_LONG)
+                            .show();
+                }
+            } catch (JSONException e) {
+                Toast.makeText(getActivity().getApplicationContext(), "Something wrong with the data" +
+                        e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
+
+
     }
 
     /**
@@ -113,15 +220,14 @@ public class ItemDetailFragment extends Fragment {
      */
     public void updateView(ItemContent content) {
         if (content != null) {
-           // mSellerUserNameTextView.setText("Seller USerName: "+content.getSellerUserName());
+            // mSellerUserNameTextView.setText("Seller USerName: "+content.getSellerUserName());
             mItemTitleTextView.setText("Item Tilte: "+content.getItemTitle());
-            title = content.getItemTitle();
             mItemPriceTextView.setText(("Item Price: "+content.getItemPrice()));
             mItemConditionTextView.setText("Item condition: "+content.getmItemCondtion());
             mItemDescriptionTextView.setText("Item Description: "+content.getItemDescription());
             mItemSellerLocationTextView.setText("Seller Location: "+content.getSellerLocation());
             mItemSellerContactTextView.setText("Seller Contact: "+content.getSellerContact());
-           // mIemImageView.setImageBitmap(content.getItemImage());
+            // mIemImageView.setImageBitmap(content.getItemImage());
             mEmail = content.getSellerContact();
             mTitle = content.getItemTitle();
             getActivity().setTitle(mTitle);
@@ -143,6 +249,13 @@ public class ItemDetailFragment extends Fragment {
         if (args != null) {
             // Set article based on argument passed in
             updateView((ItemContent) args.getSerializable(ADS_ITEM_SELECTED));
+
+            Bundle bundle = this.getArguments();
+            mID = bundle.getInt("ID");
+            mCategory = bundle.getString("Category");
+            Prefix = bundle.getString("Prefx");
+
+
         }
     }
 }

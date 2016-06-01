@@ -205,6 +205,8 @@ public class BookListFragment extends Fragment {
          */
         @Override
         protected void onPostExecute(String result) {
+
+            System.out.println("downloading..");
             // Something wrong with the network or the URL.
             if (result.startsWith("Unable to")) {
 //                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
@@ -218,9 +220,10 @@ public class BookListFragment extends Fragment {
             if (result != null) {
 //                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
 //                        .show();
+                System.out.println("result is null");
                 return;
             }
-
+            System.out.println("The book list size: " + mBookList.size());
             if (!mBookList.isEmpty()) {
                 mRecyclerView.setAdapter(new MyBookRecyclerViewAdapter(mBookList, mListener));
 
@@ -236,8 +239,8 @@ public class BookListFragment extends Fragment {
                 System.out.println(mBookList.size());
                 for (int i=0; i<mBookList.size(); i++) {
                     ItemContent item = mBookList.get(i);
-                    System.out.println(item.getSellerUserName());
-                    mSQLite.insertItem(item.getSellerUserName(),
+                    mSQLite.insertItem(item.getItemID(),
+                            item.getSellerUserName(),
                             item.getItemTitle(),
                             item.getItemPrice(),
                             item.getmItemCondtion(),

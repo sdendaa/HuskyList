@@ -223,7 +223,8 @@ public class HouseHoldListFragment extends Fragment {
                 for (int i=0; i<mHouseHoldList.size(); i++) {
                     ItemContent item = mHouseHoldList.get(i);
                     System.out.println(item.getSellerUserName());
-                    mSQLite.insertItem(item.getSellerUserName(),
+                    mSQLite.insertItem(item.getItemID(),
+                            item.getSellerUserName(),
                             item.getItemTitle(),
                             item.getItemPrice(),
                             item.getmItemCondtion(),

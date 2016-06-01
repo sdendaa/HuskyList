@@ -222,7 +222,8 @@ public class CellPhoneListFragment extends Fragment {
                 for (int i=0; i<mCellPhoneList.size(); i++) {
                     ItemContent item = mCellPhoneList.get(i);
 //                    System.out.println(item.getSellerUserName());
-                    mSQLite.insertItem(item.getSellerUserName(),
+                    mSQLite.insertItem(item.getItemID(),
+                            item.getSellerUserName(),
                             item.getItemTitle(),
                             item.getItemPrice(),
                             item.getmItemCondtion(),

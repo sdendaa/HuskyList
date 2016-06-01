@@ -221,7 +221,8 @@ public class VideoGameListFragment extends Fragment {
                 for (int i=0; i<mVideoGamesList.size(); i++) {
                     ItemContent item = mVideoGamesList.get(i);
                     System.out.println(item.getSellerUserName());
-                    mSQLite.insertItem(item.getSellerUserName(),
+                    mSQLite.insertItem(item.getItemID(),
+                            item.getSellerUserName(),
                             item.getItemTitle(),
                             item.getItemPrice(),
                             item.getmItemCondtion(),

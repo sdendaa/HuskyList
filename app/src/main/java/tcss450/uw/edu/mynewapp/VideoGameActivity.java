@@ -33,6 +33,8 @@ public class VideoGameActivity extends AppCompatActivity implements VideoGameLis
         ItemDetailFragment itemDetailFragment = new ItemDetailFragment();
         Bundle args = new Bundle();
         args.putSerializable(ItemDetailFragment.ADS_ITEM_SELECTED, item);
+        args.putInt("ID", item.getItemID());
+        args.putString("Category", item.getItemCategory());
         itemDetailFragment.setArguments(args);
 
         getSupportFragmentManager().beginTransaction()
