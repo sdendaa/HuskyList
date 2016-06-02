@@ -3,8 +3,10 @@
 * Authors: Vladimir Smirnov and Shelema Bekele
 */
 package tcss450.uw.edu.mynewapp;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.content.SharedPreferences;
@@ -134,6 +136,7 @@ public class ItemDetailFragment extends Fragment {
                 intent.putExtra("ID", mID);
                 intent.putExtra("Prefix", Prefix);
                 startActivity(intent);
+
             }
         });
 
@@ -141,14 +144,45 @@ public class ItemDetailFragment extends Fragment {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                DeleteTask task = new DeleteTask();
-                String URL = "http://cssgate.insttech.washington.edu/~sdendaa/deleteHusky.php?cmd=" + mCategory + "&Item_id=" + mID;
-                //     http://cssgate.insttech.washington.edu/~sdendaa/updateHusky.php?cmd=books&Seller_userName=v@gmail.com&Item_title=database&Item_price=kfjdjskfkvmd&Item_condition=kckkdjdjfkv&Item_descriptions=kfjdkfkgkg&Seller_location=fjdjfkfkgkkf&Seller_contact=jfjdjdjfjfjgjjf&Item_category=books&Item_id=8
-                task.execute(URL);
-                Intent intent = new Intent(getActivity(), BookActivity.class);
-                startActivity(intent);
+//                DeleteTask task = new DeleteTask();
+//                String URL = "http://cssgate.insttech.washington.edu/~sdendaa/deleteHusky.php?cmd=" + mCategory + "&Item_id=" + mID;
+//                //     http://cssgate.insttech.washington.edu/~sdendaa/updateHusky.php?cmd=books&Seller_userName=v@gmail.com&Item_title=database&Item_price=kfjdjskfkvmd&Item_condition=kckkdjdjfkv&Item_descriptions=kfjdkfkgkg&Seller_location=fjdjfkfkgkkf&Seller_contact=jfjdjdjfjfjgjjf&Item_category=books&Item_id=8
+//                task.execute(URL);
+//                Intent intent = new Intent(getActivity(), BookActivity.class);
+//                startActivity(intent);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                alertDialogBuilder.setTitle("Alert Dialog");
+                alertDialogBuilder.setMessage("Are you sure, Do you want to delete this " + mItemTitleTextView.getText().toString()+ "?");
+
+                alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        DeleteTask task = new DeleteTask();
+                        String URL = "http://cssgate.insttech.washington.edu/~sdendaa/deleteHusky.php?cmd=" + mCategory + "&Item_id=" + mID;
+                        task.execute(URL);
+                        //finish();
+                        Intent intent = new Intent(getActivity(), BookActivity.class);
+                        startActivity(intent);
+//                       getActivity().getSupportFragmentManager().beginTransaction()
+//                                .replace(R.id.reminder_container, new ReminderListFragment())
+//                                .commit();
+                    }
+                });
+
+                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //finish();
+                    }
+                });
+
+                //Create and display an alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         });
+
         return view;
     }
 

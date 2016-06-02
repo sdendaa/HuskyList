@@ -77,13 +77,23 @@ public class UpdateAddsActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     ReminderTask task = new ReminderTask();
                     task.execute(new String[] { buildURL().toString() });
+
                     Intent i = new Intent(that, BookActivity.class);
                     startActivity(i);
+                    finish();
+                    Toast.makeText(getApplication(), "Successful saved the change", Toast.LENGTH_SHORT).show();
                 }
                 String category = Prefix + "ListFragment.class";
 
             });
-
+        Button cancel = (Button) findViewById(R.id.cancel_update_button);
+        cancel.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent i = new Intent(that, BookActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
