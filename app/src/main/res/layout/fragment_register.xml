@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="tcss450.uw.edu.mynewapp.Authenticate.RegisterFragment">
+    tools:context="tcss450.uw.edu.huskylist.authenticate.RegisterFragment">
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter a valid email "
+        android:inputType="textEmailAddress"
         android:id="@+id/email" />
 
     <EditText

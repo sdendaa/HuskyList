@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"> <!--IMPORTANT otherwise backgrnd img. will not fill the whole screen -->
+    android:fillViewport="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:id="@+id/books"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="220dp" />
+            android:layout_marginTop="180dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
             android:text="Vehicles"
             android:id="@+id/vehicles"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="260dp" />
+            android:layout_marginTop="220dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
             android:text="Computers"
             android:id="@+id/computers"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="300dp" />
+            android:layout_marginTop="270dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
             android:text="Cellphones"
             android:id="@+id/cellphones"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="350dp" />
+            android:layout_marginTop="320dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
             android:text="Video Gaming"
             android:id="@+id/video_gaming"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="400dp" />
+            android:layout_marginTop="370dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -67,7 +67,7 @@
             android:text="Household Items"
             android:id="@+id/household_items"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="450dp" />
+            android:layout_marginTop="420dp" />
 
     </RelativeLayout>
 </ScrollView>

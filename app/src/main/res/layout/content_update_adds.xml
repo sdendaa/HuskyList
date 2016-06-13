@@ -17,13 +17,14 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".UpdateAddsActivity"
+        tools:context=".UpdateAddActivity"
         tools:showIn="@layout/activity_update_adds">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="40dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -32,7 +33,7 @@
                 android:id="@+id/update_item_titleView" />
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter the item title here.."
                 android:id="@+id/update_item_titleEdit" />
@@ -50,7 +51,7 @@
                 android:id="@+id/update_item_priceView" />
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter the item title here.."
                 android:id="@+id/update_item_priceEdit" />
@@ -68,7 +69,7 @@
                 android:id="@+id/update_item_condView" />
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter the item title here.."
                 android:id="@+id/update_item_condEdit" />
@@ -86,7 +87,7 @@
                 android:id="@+id/update_item_descView" />
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter the item title here.."
                 android:id="@+id/update_item_descEdit" />
@@ -104,7 +105,7 @@
                 android:id="@+id/update_item_sellerLocView" />
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter the item title here.."
                 android:id="@+id/update_item_sellerLocEdit" />
@@ -122,9 +123,10 @@
                 android:id="@+id/update_item_sellerContView" />
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter the item title here.."
+                android:inputType="textEmailAddress"
                 android:id="@+id/update_item_sellerContEdit" />
 
         </LinearLayout>

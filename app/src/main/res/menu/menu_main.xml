@@ -6,7 +6,7 @@
     <item
         android:id="@+id/action_create"
         android:orderInCategory="100"
-        android:title="Create Ads"
+        android:title="Create Ad"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_register"

@@ -29,14 +29,6 @@
             android:background="@android:drawable/btn_dropdown"
             android:spinnerMode="dropdown" />
 
-
-        <!--<EditText-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:hint="Enter Seller username here.."-->
-            <!--android:id="@+id/add_Seller_userName" />-->
-
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -72,17 +64,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter the item's seller contact here.."
+            android:inputType="textEmailAddress"
             android:id="@+id/add_item_seller_contact" />
-        <Button
-            android:id="@+id/Image_Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:background="@color/btn_bg"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:text="@string/Image_text"
-            android:textColor="@color/white" />
+
 
         <ImageView
             android:id="@+id/image_Display"
@@ -96,7 +80,6 @@
             android:id="@+id/add_ads_button"
             android:text="@string/add_item_text"
             android:onClick="addAds" />
-
     </LinearLayout>
 
 </ScrollView>
